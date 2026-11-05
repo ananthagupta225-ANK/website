@@ -1,0 +1,185 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const title = 'Industries We Serve | ANK HR Services';
+const description =
+  'HR, payroll and compliance support for offices, retail and multi-location businesses, factories, service organisations, growing SMEs and contract workforces.';
+
+const industries = [
+  {
+    n: '01',
+    name: 'Offices and corporate teams',
+    text: 'Structured HR administration, employee records, leave and attendance processes, and payroll coordination for office-based teams.',
+    relevant: ['Payroll Management', 'HR Operations & Consultancy', 'HR Policies & Documentation'],
+  },
+  {
+    n: '02',
+    name: 'Retail and multi-location businesses',
+    text: 'Consistent documentation and payroll inputs across branches, with a common format applied at every location.',
+    relevant: ['Payroll Management', 'HR Operations & Consultancy', 'Factory & Establishment Compliance'],
+  },
+  {
+    n: '03',
+    name: 'Manufacturing and factory operations',
+    text: 'Registers, licence and renewal documentation, workforce records, and inspection document organisation for factory environments.',
+    relevant: ['Factory & Establishment Compliance', 'Contract Labour Management', 'PF, ESI & Labour Law Compliances'],
+  },
+  {
+    n: '04',
+    name: 'Service-sector organisations',
+    text: 'Recruitment coordination, onboarding and employee lifecycle support for teams that grow and change frequently.',
+    relevant: ['Recruitment & Staffing', 'HR Operations & Consultancy', 'Payroll Management'],
+  },
+  {
+    n: '05',
+    name: 'Growing small and medium businesses',
+    text: 'A defined set of recurring HR tasks coordinated from outside, for organisations without a full in-house HR function.',
+    relevant: ['HR Operations & Consultancy', 'HR Policies & Documentation', 'Payroll Management'],
+  },
+  {
+    n: '06',
+    name: 'Organisations engaging contract workforces',
+    text: 'Contractor documentation checklists, wage and attendance record coordination, and audit document preparation support.',
+    relevant: ['Contract Labour Management', 'PF, ESI & Labour Law Compliances', 'Factory & Establishment Compliance'],
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <PageHero
+    label="Industries"
+    title="HR support for different business environments"
+    lead="Every business has its own workforce and operating requirements. ANK HR Services can discuss support across different types of organisations, depending on the services needed and the agreed scope."
+    breadcrumbs={[{ label: 'Industries' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="ind-list">
+        {
+          industries.map((i) => (
+            <li class="ind">
+              <div class="ind__left">
+                <span class="ind__num">{i.n}</span>
+                <h2 class="ind__name">{i.name}</h2>
+              </div>
+              <div class="ind__right">
+                <p class="ind__text">{i.text}</p>
+                <p class="ind__label">Commonly relevant services</p>
+                <ul class="ind__tags">
+                  {i.relevant.map((r) => (
+                    <li>{r}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="ind-note">
+        <p>
+          This is a guide to the business environments we can discuss, not a
+          claim of specialist experience in any particular sector. Whether we
+          can support a specific requirement depends on the services involved
+          and the scope agreed with you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Does your organisation fit one of these?"
+    text="Even if it doesn’t, tell us how your workforce is structured and what you need coordinated. We’ll let you know what we can support."
+  />
+</Base>
+
+<style>
+  .ind-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ind {
+    display: grid;
+    gap: 1rem 3.5rem;
+    padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .ind:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  @media (min-width: 880px) {
+    .ind {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    }
+  }
+
+  .ind__num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--green-ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .ind__name {
+    font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.55rem);
+    max-width: 20ch;
+  }
+
+  .ind__text {
+    color: var(--ink-2);
+    max-width: 62ch;
+  }
+
+  .ind__label {
+    margin-top: 1.35rem;
+    margin-bottom: 0.65rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .ind__tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .ind__tags li {
+    font-size: 0.8125rem;
+    padding: 0.3rem 0.7rem;
+    background: var(--grey);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink-2);
+  }
+
+  .ind-note {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    padding: 1.35rem 1.5rem;
+    background: var(--grey);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .ind-note p {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+    max-width: 78ch;
+  }
+</style>

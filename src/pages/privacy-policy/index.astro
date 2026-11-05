@@ -1,0 +1,211 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site, telLink } from '../../data/site';
+
+const title = 'Privacy Policy | ANK HR Services';
+const description =
+  'How ANK HR Services collects, uses, stores and protects the personal information submitted through this website.';
+
+/* ---------------------------------------------------------------------------
+   DRAFT STATUS
+   Set `approved` to true once ANK has reviewed and approved this policy. That
+   removes the amber review banner below. The brief requires the policy to be
+   approved before the enquiry form or any analytics goes live.
+   --------------------------------------------------------------------------- */
+const approved = false;
+const lastUpdated = '2 November 2026';
+---
+
+<Base title={title} description={description}>
+  <PageHero
+    label="Legal"
+    title="Privacy Policy"
+    breadcrumbs={[{ label: 'Privacy Policy' }]}
+  />
+
+  <section class="section">
+    <div class="container container--narrow">
+      {
+        !approved && (
+          <div class="draft" role="note">
+            <p class="draft__tag">For ANK review — not yet approved</p>
+            <p>
+              This is a draft structure covering the points required before
+              personal data is collected. It is <strong>not legal advice</strong>
+              and must be reviewed and approved by ANK HR Services — and, where
+              appropriate, by a qualified adviser familiar with applicable
+              Indian privacy and data-protection requirements — before the
+              enquiry form or any analytics goes live. Once approved, set{' '}
+              <code>approved = true</code> in{' '}
+              <code>src/pages/privacy-policy/index.astro</code> to remove this
+              banner.
+            </p>
+          </div>
+        )
+      }
+
+      <p class="updated">Last updated: {lastUpdated}</p>
+
+      <div class="prose">
+        <p class="lead">
+          This policy explains what information ANK HR Services collects through
+          this website, why it is collected, who can access it and how long it
+          is kept.
+        </p>
+
+        <h2>Who this policy covers</h2>
+        <p>
+          This policy applies to information submitted through
+          www.ankhrservices.com, including the enquiry form, and to enquiries
+          received by phone, WhatsApp or email in response to this website. It
+          does not cover information processed under a signed client engagement,
+          which is governed by the terms of that engagement.
+        </p>
+
+        <h2>What we collect</h2>
+        <p>
+          We collect only the information you choose to send us. Through the
+          enquiry form, that is:
+        </p>
+        <ul>
+          <li>Your name</li>
+          <li>Your company or organisation name, if you provide it</li>
+          <li>Your email address and/or phone number</li>
+          <li>The service areas you select and your preferred contact method</li>
+          <li>Approximate employee count, if you provide it</li>
+          <li>The requirement details you write in the message field</li>
+          <li>
+            The date and time of submission and the page the enquiry was sent
+            from
+          </li>
+        </ul>
+        <p>
+          Please do not send employee personal data, payroll files or other
+          sensitive records through the enquiry form. If files need to be shared
+          for an engagement, we will agree a secure method with you first.
+        </p>
+
+        <h2>Why we collect it</h2>
+        <p>
+          Enquiry details are used solely to understand your requirement, to
+          respond to you using the contact details you provide, and to discuss a
+          possible scope of services. We do not use enquiry details for
+          unrelated marketing, and we do not sell, rent or trade them.
+        </p>
+
+        <h2>Who can access it</h2>
+        <p>
+          Enquiry submissions are delivered to a company-controlled Google
+          Workspace account and are accessible only to ANK HR Services personnel
+          involved in responding to enquiries. Google acts as our service
+          provider for receiving and storing these submissions.
+        </p>
+
+        <h2>How long we keep it</h2>
+        <p>
+          Enquiry records are retained only as long as needed to respond to the
+          enquiry and to maintain a reasonable business record. You may ask us
+          to delete your enquiry details at any time using the contact details
+          below.
+        </p>
+
+        <h2>Cookies and analytics</h2>
+        <p>
+          This website does not set advertising or tracking cookies and does not
+          load third-party fonts or embedded content. If website analytics is
+          added in future, this policy will be updated first and any notice or
+          consent required at that time will be provided.
+        </p>
+
+        <h2>Security</h2>
+        <p>
+          This website is served over HTTPS. Enquiry data is transmitted over an
+          encrypted connection and stored in an access-controlled account. No
+          method of transmission or storage is completely secure, but we take
+          reasonable steps to protect the information you send us.
+        </p>
+
+        <h2>Links to other websites</h2>
+        <p>
+          Where this website links to external websites or services, those sites
+          operate under their own privacy policies and we are not responsible
+          for their content or practices.
+        </p>
+
+        <h2>Your choices</h2>
+        <p>
+          You may ask us what enquiry information we hold about you, ask us to
+          correct it, or ask us to delete it. Contact us using the details below
+          and we will respond within a reasonable period.
+        </p>
+
+        <h2>Changes to this policy</h2>
+        <p>
+          We may update this policy from time to time. The date at the top of
+          this page shows when it was last revised.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          For any question about this policy or the information you have sent
+          us, contact ANK HR Services:
+        </p>
+        <ul>
+          <li>Phone: <a href={telLink}>{site.phoneDisplay}</a></li>
+          {
+            !site.emailIsPlaceholder && (
+              <li>
+                Email: <a href={`mailto:${site.email}`}>{site.email}</a>
+              </li>
+            )
+          }
+          <li>Address: {site.addressLine}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .draft {
+    padding: 1.25rem 1.5rem;
+    background: #fff4ec;
+    border: 1px solid #ffd3b8;
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+    font-size: 0.9375rem;
+    color: #8a3a06;
+  }
+
+  .draft__tag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .draft code {
+    font-size: 0.8125rem;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+  }
+
+  .updated {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .prose h2 {
+    font-size: 1.1875rem;
+  }
+
+  .prose ul {
+    color: var(--ink-2);
+  }
+</style>

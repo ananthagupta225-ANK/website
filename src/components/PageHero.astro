@@ -1,0 +1,82 @@
+---
+interface Props {
+  label?: string;
+  title: string;
+  lead?: string;
+  breadcrumbs?: { label: string; href?: string }[];
+}
+const { label, title, lead, breadcrumbs = [] } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="container">
+    {
+      breadcrumbs.length > 0 && (
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <ol>
+            <li>
+              <a href="/">Home</a>
+            </li>
+            {breadcrumbs.map((c) => (
+              <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+    {label && <p class="label">{label}</p>}
+    <h1>{title}</h1>
+    {lead && <p class="lead page-hero__lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    background: var(--grey);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 5vw, 4.25rem) clamp(2.75rem, 5vw, 4.25rem);
+  }
+
+  .page-hero__lead {
+    margin-top: 1.35rem;
+    max-width: 68ch;
+  }
+
+  .crumbs {
+    margin-bottom: 1.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--muted);
+  }
+
+  .crumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+    color: var(--line-strong);
+  }
+
+  .crumbs a {
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--navy);
+    text-decoration: underline;
+  }
+
+  .crumbs [aria-current='page'] {
+    color: var(--navy);
+    font-weight: 600;
+  }
+</style>

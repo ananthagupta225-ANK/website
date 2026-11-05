@@ -1,0 +1,79 @@
+---
+/* Renders the supplied ANK logo file when one is configured in src/data/site.ts.
+   Until then it falls back to a plain typographic wordmark — the brief forbids
+   redrawing or recreating the logo artwork, so nothing is invented here. */
+import { site } from '../data/site';
+
+interface Props {
+  variant?: 'dark' | 'light';
+}
+const { variant = 'dark' } = Astro.props;
+---
+
+{
+  site.logo ? (
+    <img
+      class="logo-img"
+      src={site.logo}
+      width={site.logoWidth}
+      height={site.logoHeight}
+      alt={`${site.name} logo`}
+      data-variant={variant}
+    />
+  ) : (
+    <span class="wordmark" data-variant={variant}>
+      <span class="wordmark__ank">ANK</span>
+      <span class="wordmark__rule" aria-hidden="true" />
+      <span class="wordmark__sub">HR Services</span>
+    </span>
+  )
+}
+
+<style>
+  .logo-img {
+    height: auto;
+    width: auto;
+    max-height: 44px;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--serif);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .wordmark__ank {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--navy);
+  }
+
+  .wordmark__rule {
+    width: 1px;
+    height: 1.35rem;
+    background: var(--line-strong);
+  }
+
+  .wordmark__sub {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  .wordmark[data-variant='light'] .wordmark__ank {
+    color: #fff;
+  }
+  .wordmark[data-variant='light'] .wordmark__sub {
+    color: var(--on-navy-muted);
+  }
+  .wordmark[data-variant='light'] .wordmark__rule {
+    background: var(--on-navy-line);
+  }
+</style>

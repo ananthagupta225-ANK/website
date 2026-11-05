@@ -1,0 +1,220 @@
+---
+import Logo from './Logo.astro';
+import { site, telLink, mailLink, whatsappLink } from '../data/site';
+import { services } from '../data/services';
+
+interface Props {
+  year: number;
+}
+const { year } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a href="/" aria-label={`${site.name} — home`}>
+          <Logo variant="light" />
+        </a>
+        <p class="site-footer__blurb">
+          ANK HR Services supports organisations with HR operations, payroll
+          management, employee documentation, recruitment coordination and
+          applicable statutory compliance support. Service scope is agreed
+          individually with each client.
+        </p>
+        <dl class="site-footer__contact">
+          <div>
+            <dt>Phone</dt>
+            <dd><a href={telLink}>{site.phoneDisplay}</a></dd>
+          </div>
+          {
+            !site.emailIsPlaceholder && (
+              <div>
+                <dt>Email</dt>
+                <dd>
+                  <a href={mailLink}>{site.email}</a>
+                </dd>
+              </div>
+            )
+          }
+          <div>
+            <dt>Office</dt>
+            <dd>{site.addressLine}</dd>
+          </div>
+          <div>
+            <dt>Hours</dt>
+            <dd>{site.hoursNote}, {site.hours}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer">
+        <div class="site-footer__col">
+          <h2 class="site-footer__heading">Services</h2>
+          <ul>
+            {
+              services.map((s) => (
+                <li>
+                  <a href={`/services/${s.slug}/`}>{s.title}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="site-footer__col">
+          <h2 class="site-footer__heading">Company</h2>
+          <ul>
+            <li><a href="/about/">About Us</a></li>
+            <li><a href="/services/">All Services</a></li>
+            <li><a href="/industries/">Industries We Serve</a></li>
+            <li><a href="/why-ank/">Why Choose ANK</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
+            <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="site-footer__col">
+          <h2 class="site-footer__heading">Get in touch</h2>
+          <ul>
+            <li><a href={telLink}>Call {site.phoneDisplay}</a></li>
+            <li><a href={whatsappLink} rel="noopener">WhatsApp enquiry</a></li>
+            <li><a href="/contact/">Enquiry form</a></li>
+          </ul>
+          {
+            site.social.length > 0 && (
+              <ul class="site-footer__social">
+                {site.social.map((s) => (
+                  <li>
+                    <a href={s.href} rel="noopener">
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+      </nav>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>© {year} {site.legalName}. All rights reserved.</p>
+      <p class="site-footer__note">
+        Service availability and scope are confirmed individually with each
+        client. Information on this website is general in nature and is not
+        legal or professional advice.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: var(--on-navy-muted);
+    font-size: 0.9375rem;
+    padding-block: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .site-footer__top {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 900px) {
+    .site-footer__top {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    }
+  }
+
+  .site-footer__blurb {
+    margin-top: 1.4rem;
+    max-width: 44ch;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+
+  .site-footer__contact {
+    margin: 1.75rem 0 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .site-footer__contact > div {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 0.75rem;
+  }
+
+  .site-footer__contact dt {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7d92b4;
+    padding-top: 0.1rem;
+  }
+
+  .site-footer__contact dd {
+    margin: 0;
+    color: #fff;
+  }
+
+  .site-footer__nav {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .site-footer__heading {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 1.1rem;
+  }
+
+  .site-footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .site-footer a {
+    color: var(--on-navy-muted);
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .site-footer__contact a {
+    color: #fff;
+  }
+
+  .site-footer__social {
+    margin-top: 1.5rem !important;
+    padding-top: 1.25rem !important;
+    border-top: 1px solid var(--on-navy-line);
+  }
+
+  .site-footer__bottom {
+    border-top: 1px solid var(--on-navy-line);
+    padding-block: 1.5rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    font-size: 0.8125rem;
+    color: #7d92b4;
+  }
+
+  .site-footer__note {
+    max-width: 62ch;
+  }
+</style>

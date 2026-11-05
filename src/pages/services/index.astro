@@ -1,0 +1,186 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services } from '../../data/services';
+
+const title = 'HR, Payroll & Compliance Services | ANK HR Services';
+const description =
+  'Seven areas of HR support from ANK HR Services: payroll, PF and ESI, HR operations, policies, recruitment, factory compliance and contract labour coordination.';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'ANK HR Services — services',
+    itemListElement: services.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: s.title,
+      url: `https://www.ankhrservices.com/services/${s.slug}/`,
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <PageHero
+    label="Services"
+    title="HR, payroll and compliance support"
+    lead="Explore the HR, payroll, recruitment, documentation and compliance-related support offered by ANK HR Services. The exact scope can be discussed based on your organisation, workforce, locations and applicable requirements."
+    breadcrumbs={[{ label: 'Services' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <ol class="service-list">
+        {
+          services.map((s) => (
+            <li class="service-row">
+              <div class="service-row__head">
+                <span class="service-row__num">{s.number}</span>
+                <h2 class="service-row__title">
+                  <a href={`/services/${s.slug}/`}>{s.title}</a>
+                </h2>
+                <p class="service-row__lead">{s.lead}</p>
+                <a class="arrow-link" href={`/services/${s.slug}/`}>
+                  View service details
+                </a>
+              </div>
+              <div class="service-row__body">
+                <p class="service-row__label">What is typically included</p>
+                <ul class="ticks">
+                  {s.activities.slice(0, 5).map((a) => (
+                    <li>{a}</li>
+                  ))}
+                </ul>
+                {s.activities.length > 5 && (
+                  <p class="service-row__more">
+                    + {s.activities.length - 5} further{' '}
+                    {s.activities.length - 5 === 1 ? 'activity' : 'activities'} —{' '}
+                    <a href={`/services/${s.slug}/`}>see the full list</a>
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="scope-note scope-note--page">
+        <h2>A note on scope</h2>
+        <p>
+          Service availability and deliverables are confirmed individually with
+          each client. Requirements vary by establishment, location, workforce
+          and the law in force at the time, so the activities listed here
+          describe the support we can coordinate rather than a fixed package.
+          Responsibilities, approvals, exclusions and commercials are set out in
+          the engagement before work begins.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .service-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .service-row {
+    display: grid;
+    gap: 1.75rem 3.5rem;
+    padding-block: clamp(2.25rem, 4vw, 3.25rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .service-row:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  @media (min-width: 900px) {
+    .service-row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  .service-row__num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--green-ink);
+    margin-bottom: 0.85rem;
+  }
+
+  .service-row__title {
+    font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+    margin-bottom: 0.9rem;
+  }
+
+  .service-row__title a {
+    text-decoration: none;
+  }
+
+  .service-row__title a:hover {
+    text-decoration: underline;
+  }
+
+  .service-row__lead {
+    color: var(--ink-2);
+    max-width: 50ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-row__body {
+    background: var(--grey);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .service-row__label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .service-row__body .ticks li {
+    font-size: 0.9375rem;
+  }
+
+  .service-row__more {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line-strong);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .scope-note--page {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--grey);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .scope-note--page h2 {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .scope-note--page p {
+    font-size: 0.9375rem;
+    max-width: 78ch;
+  }
+</style>

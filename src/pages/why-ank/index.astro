@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const title = 'Why Choose ANK | ANK HR Services';
+const description =
+  'Why businesses work with ANK HR Services: organised processes, careful documentation, clear communication and a service scope agreed in writing up front.';
+
+const reasons = [
+  {
+    n: '01',
+    t: 'Organised processes',
+    d: 'We focus on clear workflows, documentation and coordination. Checklists, trackers and record formats are agreed up front so the same process runs the same way every cycle.',
+  },
+  {
+    n: '02',
+    t: 'Business-focused support',
+    d: 'We aim to understand how your organisation actually works — the people, the approvals, the systems — before agreeing on the scope of support.',
+  },
+  {
+    n: '03',
+    t: 'Attention to detail',
+    d: 'Employee records, payroll inputs and compliance documentation require careful handling. Accuracy in the detail is what makes the rest of the process dependable.',
+  },
+  {
+    n: '04',
+    t: 'Clear communication',
+    d: 'We encourage timely coordination and clarity on responsibilities, information and approvals, so nothing sits waiting on an unasked question.',
+  },
+  {
+    n: '05',
+    t: 'Flexible service scope',
+    d: 'Support can be discussed based on the organisation’s needs and agreed deliverables — one function or several, ongoing or for a defined period.',
+  },
+  {
+    n: '06',
+    t: 'A single point of coordination',
+    d: 'Rather than managing separate providers for payroll, documentation and compliance coordination, you can discuss several requirements with one service partner.',
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <PageHero
+    label="Why ANK"
+    title="A practical partner for HR and payroll processes"
+    lead="What we offer is straightforward: organised processes, careful documentation and clear coordination, within a scope agreed with you in writing."
+    breadcrumbs={[{ label: 'Why ANK' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="reasons">
+        {
+          reasons.map((r) => (
+            <li class="reason">
+              <span class="reason__num">{r.n}</span>
+              <h2 class="reason__title">{r.t}</h2>
+              <p class="reason__text">{r.d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--grey">
+    <div class="container container--narrow">
+      <p class="label">Being clear about what we offer</p>
+      <h2>What we do not claim</h2>
+      <div class="prose" style="margin-top:1.5rem;">
+        <p>
+          Statutory requirements vary by establishment, location, workforce and
+          the law in force at the time. Because of that, we are deliberate about
+          the promises we make:
+        </p>
+        <ul class="ticks" style="margin-top:1.25rem;">
+          <li>
+            We do not promise guaranteed compliance, zero errors or complete
+            legal protection.
+          </li>
+          <li>
+            We do not provide legal opinions. Where a legal determination is
+            needed, we coordinate with your qualified professional advisers.
+          </li>
+          <li>
+            We do not guarantee hiring outcomes. Selection decisions rest with
+            the client.
+          </li>
+          <li>
+            We do not publish client names, logos, testimonials or case studies
+            without written permission.
+          </li>
+        </ul>
+        <p>
+          What we do commit to is an agreed scope, documented deliverables and
+          clear communication about responsibilities on both sides.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .reasons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2.5rem 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  }
+
+  .reason {
+    padding-top: 1.35rem;
+    border-top: 2px solid var(--navy);
+  }
+
+  .reason__num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--green-ink);
+    margin-bottom: 0.7rem;
+  }
+
+  .reason__title {
+    font-size: 1.1875rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .reason__text {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import { services } from '../data/services';
+---
+
+<Base
+  title="Page not found | ANK HR Services"
+  description="The page you were looking for could not be found."
+  noindex
+>
+  <section class="section nf">
+    <div class="container container--narrow">
+      <p class="label">Error 404</p>
+      <h1>This page could not be found</h1>
+      <p class="lead" style="margin-top:1.25rem;">
+        The page may have been moved or the address mistyped. Here are the main
+        places to continue from.
+      </p>
+      <ul class="nf__links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/services/">All services</a></li>
+        {services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}
+        <li><a href="/contact/">Contact us</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf__links {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .nf__links li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nf__links a {
+    display: block;
+    padding: 0.85rem 0;
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .nf__links a:hover {
+    text-decoration: underline;
+  }
+</style>

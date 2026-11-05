@@ -1,0 +1,94 @@
+---
+import { site, telLink, whatsappLink } from '../data/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+  primaryLabel?: string;
+}
+const {
+  title = 'Let’s discuss your HR requirements',
+  text = 'Tell us about your organisation and the support you are looking for. We’ll review your enquiry and come back to you on scope and next steps.',
+  primaryLabel = 'Request a Consultation',
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="container cta-band__inner">
+    <div class="cta-band__copy">
+      <h2>{title}</h2>
+      <p class="lead">{text}</p>
+    </div>
+    <div class="cta-band__actions">
+      <a class="btn btn--accent" href="/contact/">{primaryLabel}</a>
+      <a class="btn btn--on-navy" href={telLink}>Call {site.phoneDisplay}</a>
+      <p class="cta-band__alt">
+        Prefer WhatsApp? <a href={whatsappLink} rel="noopener">Message us</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    background: var(--navy);
+    color: var(--on-navy-muted);
+    padding-block: clamp(3rem, 6vw, 4.75rem);
+    position: relative;
+  }
+
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(
+      to right,
+      var(--green) 0 33.33%,
+      var(--orange) 33.33% 66.66%,
+      var(--navy-700) 66.66% 100%
+    );
+  }
+
+  .cta-band__inner {
+    display: grid;
+    gap: 2.25rem;
+    align-items: center;
+  }
+
+  @media (min-width: 880px) {
+    .cta-band__inner {
+      grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 1fr);
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  .cta-band h2 {
+    color: #fff;
+  }
+
+  .cta-band__copy .lead {
+    margin-top: 1rem;
+    max-width: 56ch;
+  }
+
+  .cta-band__actions {
+    display: flex;
+    align-content: start;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    align-items: center;
+  }
+
+  .cta-band__alt {
+    flex-basis: 100%;
+    font-size: 0.875rem;
+    color: #7d92b4;
+    margin: 0;
+  }
+
+  .cta-band__alt a {
+    color: #fff;
+  }
+</style>

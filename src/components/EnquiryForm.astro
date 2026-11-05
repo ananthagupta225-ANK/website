@@ -1,0 +1,624 @@
+---
+import { site, telLink, whatsappLink } from '../data/site';
+import { services } from '../data/services';
+
+const connected = Boolean(site.formEndpoint);
+
+const employeeBands = [
+  '1 – 25',
+  '26 – 100',
+  '101 – 250',
+  '251 – 500',
+  'More than 500',
+];
+---
+
+<div class="enquiry">
+  {
+    !connected && (
+      <div class="notice notice--warn" role="status">
+        <p>
+          <strong>Enquiry form not connected yet.</strong> Add your Google Apps
+          Script Web App URL to <code>formEndpoint</code> in{' '}
+          <code>src/data/site.ts</code> to switch it on. Until then, please use
+          the phone or WhatsApp options so no enquiry is lost.
+        </p>
+      </div>
+    )
+  }
+
+  <form
+    class="form"
+    id="enquiry-form"
+    novalidate
+    data-endpoint={site.formEndpoint}
+    aria-describedby="form-status"
+  >
+    <div class="form__grid">
+      <div class="field field--half">
+        <label for="f-name">Full name <abbr title="required">*</abbr></label>
+        <input
+          type="text"
+          id="f-name"
+          name="name"
+          autocomplete="name"
+          required
+          aria-describedby="e-name"
+        />
+        <p class="field__error" id="e-name" hidden>Please enter your name.</p>
+      </div>
+
+      <div class="field field--half">
+        <label for="f-company">Company / organisation</label>
+        <input
+          type="text"
+          id="f-company"
+          name="company"
+          autocomplete="organization"
+        />
+      </div>
+
+      <div class="field field--half">
+        <label for="f-email">Work email</label>
+        <input
+          type="email"
+          id="f-email"
+          name="email"
+          autocomplete="email"
+          inputmode="email"
+          aria-describedby="e-email contact-hint"
+        />
+        <p class="field__error" id="e-email" hidden>
+          Please enter a valid email address.
+        </p>
+      </div>
+
+      <div class="field field--half">
+        <label for="f-phone">Phone number</label>
+        <input
+          type="tel"
+          id="f-phone"
+          name="phone"
+          autocomplete="tel"
+          inputmode="tel"
+          aria-describedby="e-phone contact-hint"
+        />
+        <p class="field__error" id="e-phone" hidden>
+          Please enter a valid phone number.
+        </p>
+      </div>
+
+      <p class="field__hint field--full" id="contact-hint">
+        Please provide at least one contact method — email or phone — so we can
+        reply to your enquiry.
+      </p>
+
+      <fieldset class="field field--full">
+        <legend>
+          Services you would like to discuss <abbr title="required">*</abbr>
+        </legend>
+        <p class="field__hint" id="services-hint">Select all that apply.</p>
+        <div
+          class="checks"
+          role="group"
+          aria-describedby="services-hint e-services"
+        >
+          {
+            services.map((s) => (
+              <label class="check">
+                <input type="checkbox" name="services" value={s.title} />
+                <span>{s.title}</span>
+              </label>
+            ))
+          }
+          <label class="check">
+            <input
+              type="checkbox"
+              name="services"
+              value="Not sure / multiple areas"
+            />
+            <span>Not sure / multiple areas</span>
+          </label>
+        </div>
+        <p class="field__error" id="e-services" hidden>
+          Please select at least one service.
+        </p>
+      </fieldset>
+
+      <div class="field field--half">
+        <label for="f-employees">Approximate employee count</label>
+        <select id="f-employees" name="employees">
+          <option value="">Select a range (optional)</option>
+          {employeeBands.map((b) => <option value={b}>{b}</option>)}
+        </select>
+      </div>
+
+      <div class="field field--half">
+        <label for="f-contactpref">Preferred contact method</label>
+        <select id="f-contactpref" name="preferredContact">
+          <option value="">No preference (optional)</option>
+          <option value="Email">Email</option>
+          <option value="Phone call">Phone call</option>
+          <option value="WhatsApp">WhatsApp</option>
+        </select>
+      </div>
+
+      <div class="field field--full">
+        <label for="f-message">
+          Requirement details <abbr title="required">*</abbr>
+        </label>
+        <textarea
+          id="f-message"
+          name="message"
+          rows="5"
+          required
+          placeholder="Tell us about your organisation, your current process and the support you are looking for."
+          aria-describedby="e-message"></textarea>
+        <p class="field__error" id="e-message" hidden>
+          Please tell us briefly what you need help with.
+        </p>
+      </div>
+
+      <div class="field field--full">
+        <label class="check check--consent">
+          <input type="checkbox" name="consent" id="f-consent" required />
+          <span>
+            I agree that ANK HR Services may use the details submitted here to
+            respond to this enquiry, as described in the{' '}
+            <a href="/privacy-policy/">Privacy Policy</a>.
+            <abbr title="required">*</abbr>
+          </span>
+        </label>
+        <p class="field__error" id="e-consent" hidden>
+          Please confirm this to continue.
+        </p>
+      </div>
+
+      {/* Spam traps — hidden from people, visible to bots. */}
+      <div class="hp" aria-hidden="true">
+        <label for="f-website">Website (leave blank)</label>
+        <input
+          type="text"
+          id="f-website"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+      <input type="hidden" name="startedAt" id="f-started" />
+      <input type="hidden" name="page" id="f-page" />
+    </div>
+
+    <div class="form__foot">
+      <button
+        class="btn btn--accent"
+        type="submit"
+        data-submit
+        disabled={!connected}
+        aria-disabled={!connected}
+      >
+        Send Enquiry
+      </button>
+      <p class="small text-muted">
+        We reply during business hours, {site.hoursNote}, {site.hours}.
+      </p>
+    </div>
+
+    <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+
+    <noscript>
+      <div class="notice notice--warn">
+        <p>
+          This form needs JavaScript to send your enquiry. Please call
+          <a href={telLink}>{site.phoneDisplay}</a> or
+          <a href={whatsappLink} rel="noopener">message us on WhatsApp</a>
+          instead.
+        </p>
+      </div>
+    </noscript>
+  </form>
+
+  <div class="success" id="form-success" hidden tabindex="-1">
+    <p class="success__mark" aria-hidden="true">✓</p>
+    <h2>Thank you for contacting ANK HR Services.</h2>
+    <p>
+      Your enquiry has been received. Our team will review the details and
+      contact you using the information provided.
+    </p>
+    <p class="small text-muted">
+      If your requirement is urgent, call <a href={telLink}>{site.phoneDisplay}</a>
+      during business hours.
+    </p>
+  </div>
+</div>
+
+<style>
+  .enquiry {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 1.5rem;
+  }
+
+  .field--full,
+  fieldset.field--full {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 680px) {
+    .form__grid {
+      grid-template-columns: 1fr;
+    }
+    .field--half {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .field {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  fieldset.field {
+    border: 0;
+    padding: 0;
+    margin: 0.25rem 0 0;
+  }
+
+  label,
+  legend {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--navy);
+    padding: 0;
+  }
+
+  legend {
+    margin-bottom: 0.4rem;
+  }
+
+  abbr {
+    color: var(--orange);
+    text-decoration: none;
+    margin-left: 0.15rem;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 7rem;
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: #a9b6c5;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(8, 36, 79, 0.12);
+  }
+
+  [aria-invalid='true'] {
+    border-color: var(--orange) !important;
+  }
+
+  ::placeholder {
+    color: #9aa7b6;
+  }
+
+  .field__hint {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .field__error {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--orange-700);
+    margin: 0;
+  }
+
+  .checks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.5rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--ink-2);
+    cursor: pointer;
+    line-height: 1.45;
+  }
+
+  .check input {
+    flex: none;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-top: 0.18rem;
+    accent-color: var(--navy);
+    cursor: pointer;
+  }
+
+  .check--consent {
+    align-items: flex-start;
+    padding: 0.9rem 1rem;
+    background: var(--grey);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+  }
+
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .form__foot .small {
+    margin: 0;
+  }
+
+  .form__status {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--orange-700);
+  }
+
+  .form__status:empty {
+    display: none;
+  }
+
+  .notice {
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .notice p {
+    margin: 0;
+  }
+
+  .notice--warn {
+    background: #fff4ec;
+    border: 1px solid #ffd3b8;
+    color: #8a3a06;
+  }
+
+  .notice--warn a {
+    color: #8a3a06;
+  }
+
+  .notice code {
+    font-size: 0.8125rem;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+  }
+
+  .success {
+    text-align: left;
+  }
+
+  .success:focus {
+    outline: none;
+  }
+
+  .success__mark {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(0, 192, 37, 0.12);
+    color: var(--green-ink);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+  }
+
+  .success h2 {
+    font-size: 1.5rem;
+  }
+
+  .success p + p {
+    margin-top: 0.85rem;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('enquiry-form') as HTMLFormElement | null;
+
+  if (form) {
+    const endpoint = form.dataset.endpoint ?? '';
+    const status = document.getElementById('form-status') as HTMLElement;
+    const success = document.getElementById('form-success') as HTMLElement;
+    const submit = form.querySelector('[data-submit]') as HTMLButtonElement;
+
+    (document.getElementById('f-started') as HTMLInputElement).value =
+      String(Date.now());
+    (document.getElementById('f-page') as HTMLInputElement).value =
+      window.location.pathname;
+
+    const show = (errId: string, on: boolean, field?: HTMLElement) => {
+      const el = document.getElementById(errId);
+      if (el) el.hidden = !on;
+      if (field) field.setAttribute('aria-invalid', String(on));
+    };
+
+    const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    const phoneOk = (v: string) => v.replace(/\D/g, '').length >= 10;
+
+    const validate = () => {
+      const name = form.elements.namedItem('name') as HTMLInputElement;
+      const email = form.elements.namedItem('email') as HTMLInputElement;
+      const phone = form.elements.namedItem('phone') as HTMLInputElement;
+      const message = form.elements.namedItem('message') as HTMLTextAreaElement;
+      const consent = form.elements.namedItem('consent') as HTMLInputElement;
+      const picked = form.querySelectorAll<HTMLInputElement>(
+        'input[name="services"]:checked'
+      );
+
+      let firstBad: HTMLElement | null = null;
+      const fail = (el: HTMLElement) => {
+        if (!firstBad) firstBad = el;
+      };
+
+      const nameBad = name.value.trim().length < 2;
+      show('e-name', nameBad, name);
+      if (nameBad) fail(name);
+
+      const emailVal = email.value.trim();
+      const phoneVal = phone.value.trim();
+      const noContact = !emailVal && !phoneVal;
+      const emailBad = (!!emailVal && !emailOk(emailVal)) || noContact;
+      const phoneBad = (!!phoneVal && !phoneOk(phoneVal)) || noContact;
+
+      show('e-email', emailBad, email);
+      show('e-phone', phoneBad, phone);
+      if (noContact) {
+        const hint = document.getElementById('e-email');
+        if (hint)
+          hint.textContent = 'Please provide an email address or a phone number.';
+        fail(email);
+      } else {
+        const hint = document.getElementById('e-email');
+        if (hint) hint.textContent = 'Please enter a valid email address.';
+        if (emailBad) fail(email);
+        else if (phoneBad) fail(phone);
+      }
+
+      const servicesBad = picked.length === 0;
+      show('e-services', servicesBad);
+      if (servicesBad)
+        fail(form.querySelector('input[name="services"]') as HTMLElement);
+
+      const msgBad = message.value.trim().length < 10;
+      show('e-message', msgBad, message);
+      if (msgBad) fail(message);
+
+      const consentBad = !consent.checked;
+      show('e-consent', consentBad);
+      if (consentBad) fail(consent);
+
+      return firstBad as HTMLElement | null;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status.textContent = '';
+
+      const firstBad = validate();
+      if (firstBad) {
+        status.textContent =
+          'Please check the highlighted fields and try again.';
+        firstBad.focus();
+        return;
+      }
+
+      if (!endpoint) {
+        status.textContent =
+          'This form is not connected yet. Please call or message us instead.';
+        return;
+      }
+
+      const data = new FormData(form);
+      const payload: Record<string, string> = {
+        name: String(data.get('name') ?? '').trim(),
+        company: String(data.get('company') ?? '').trim(),
+        email: String(data.get('email') ?? '').trim(),
+        phone: String(data.get('phone') ?? '').trim(),
+        services: data.getAll('services').join(' | '),
+        employees: String(data.get('employees') ?? ''),
+        preferredContact: String(data.get('preferredContact') ?? ''),
+        message: String(data.get('message') ?? '').trim(),
+        consent: 'Yes',
+        page: String(data.get('page') ?? ''),
+        website: String(data.get('website') ?? ''),
+        startedAt: String(data.get('startedAt') ?? ''),
+      };
+
+      submit.disabled = true;
+      const originalLabel = submit.textContent;
+      submit.textContent = 'Sending…';
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          // text/plain keeps this a "simple" request, so the browser does not
+          // send a CORS preflight that Apps Script cannot answer.
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+          redirect: 'follow',
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const result = await response.json().catch(() => ({ ok: true }));
+        if (result && result.ok === false) throw new Error(result.error ?? 'rejected');
+
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (error) {
+        console.error('Enquiry submission failed:', error);
+        status.textContent =
+          'We couldn’t submit your enquiry. Please check the required fields and try again, or contact us directly.';
+        submit.disabled = false;
+        submit.textContent = originalLabel;
+      }
+    });
+
+    // Clear an error as soon as the person fixes the field.
+    form.addEventListener('input', (event) => {
+      const el = event.target as HTMLElement;
+      if (el.getAttribute('aria-invalid') === 'true') validate();
+    });
+  }
+</script>

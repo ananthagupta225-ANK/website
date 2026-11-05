@@ -1,0 +1,185 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site } from '../../data/site';
+
+const title = 'About ANK HR Services | HR and Payroll Support';
+const description =
+  'How ANK HR Services works: agreed scopes, organised documentation and clear coordination across HR operations, payroll, recruitment and compliance support.';
+---
+
+<Base title={title} description={description}>
+  <PageHero
+    label="About us"
+    title="About ANK HR Services"
+    lead="ANK HR Services provides business-focused support across HR operations, payroll management, employee documentation, recruitment and statutory compliance coordination."
+    breadcrumbs={[{ label: 'About' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="split split--sticky">
+        <div>
+          <p class="label">Who we are</p>
+          <h2>A service partner for everyday people processes</h2>
+        </div>
+        <div class="prose measure">
+          <p class="lead">
+            ANK HR Services supports organisations with practical HR, payroll,
+            recruitment, documentation and compliance-related services.
+          </p>
+          <p>
+            We understand that well-organised people processes matter to
+            day-to-day business operations. We aim to help businesses organise
+            these processes through clear coordination, structured documentation
+            and service scopes tailored to their requirements.
+          </p>
+          <p>
+            Our approach begins with understanding the client’s business,
+            workforce, current process and priorities. We then discuss the
+            services required, agree on responsibilities, and work with the
+            client’s team to coordinate the agreed deliverables — maintaining
+            organised records and communicating clearly throughout.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--grey">
+    <div class="container">
+      <div class="mv">
+        <article class="mv__card">
+          <p class="label">Our mission</p>
+          <p class="mv__text">
+            To support organisations with practical HR services and organised
+            processes that help improve day-to-day administration and
+            employee-related operations.
+          </p>
+        </article>
+        <article class="mv__card">
+          <p class="label">Our vision</p>
+          <p class="mv__text">
+            To become a trusted partner for organisations seeking coordinated
+            support across the employee lifecycle.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div>
+          <p class="label">How we work</p>
+          <h2>What you can expect from an engagement</h2>
+        </div>
+        <ul class="ticks expectations">
+          <li>
+            A conversation about your organisation, workforce and current
+            process before anything is proposed.
+          </li>
+          <li>
+            A written scope covering deliverables, responsibilities, the
+            information we need from you and what is excluded.
+          </li>
+          <li>
+            Agreed formats, checklists and trackers, so the same process runs
+            the same way each cycle.
+          </li>
+          <li>
+            Clear routes for questions, approvals and escalation, with a single
+            point of coordination.
+          </li>
+          <li>
+            Documents and outputs shared for your review and approval before
+            they are issued or acted on.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight section--bordered">
+    <div class="container">
+      <div class="facts">
+        <div class="facts__item">
+          <p class="facts__label">Based in</p>
+          <p class="facts__value">{site.locality}, {site.region}</p>
+        </div>
+        <div class="facts__item">
+          <p class="facts__label">Service area</p>
+          <p class="facts__value">{site.serviceArea}</p>
+        </div>
+        <div class="facts__item">
+          <p class="facts__label">Business hours</p>
+          <p class="facts__value">{site.hoursNote}, {site.hours}</p>
+        </div>
+        <div class="facts__item">
+          <p class="facts__label">Speak to us</p>
+          <p class="facts__value">
+            <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .mv {
+    display: grid;
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  @media (min-width: 820px) {
+    .mv {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .mv__card {
+    background: #fff;
+    padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+
+  .mv__text {
+    font-family: var(--serif);
+    font-size: clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem);
+    line-height: 1.5;
+    color: var(--navy);
+  }
+
+  .expectations li {
+    color: var(--ink-2);
+  }
+
+  .facts {
+    display: grid;
+    gap: 1.5rem 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .facts__label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.45rem;
+  }
+
+  .facts__value {
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    color: var(--navy);
+  }
+</style>

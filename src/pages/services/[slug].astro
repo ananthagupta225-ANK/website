@@ -1,0 +1,438 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services, getService } from '../../data/services';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const related = service.related
+  .map((slug) => getService(slug))
+  .filter(Boolean) as typeof services;
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.summary,
+    serviceType: service.title,
+    provider: { '@id': 'https://www.ankhrservices.com/#organisation' },
+    areaServed: site.serviceArea,
+    url: `https://www.ankhrservices.com/services/${service.slug}/`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: service.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.ankhrservices.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Services',
+        item: 'https://www.ankhrservices.com/services/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: service.title,
+        item: `https://www.ankhrservices.com/services/${service.slug}/`,
+      },
+    ],
+  },
+];
+---
+
+<Base
+  title={service.metaTitle}
+  description={service.metaDescription}
+  schema={schema}
+>
+  <PageHero
+    label={`Service ${service.number}`}
+    title={service.title}
+    lead={service.lead}
+    breadcrumbs={[
+      { label: 'Services', href: '/services/' },
+      { label: service.title },
+    ]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="detail">
+        <!-- Main column ------------------------------------------------- -->
+        <div class="detail__main">
+          <h2 class="detail__h2">Business needs this service may support</h2>
+          <ul class="needs">
+            {service.needs.map((n) => <li>{n}</li>)}
+          </ul>
+
+          <h2 class="detail__h2">What the service covers</h2>
+          <ul class="ticks ticks--two activities">
+            {service.activities.map((a) => <li>{a}</li>)}
+          </ul>
+
+          <h2 class="detail__h2">How the engagement works</h2>
+          <ol class="engagement">
+            {
+              service.engagement.map((e, i) => (
+                <li>
+                  <span class="engagement__num">{String(i + 1).padStart(2, '0')}</span>
+                  <span>{e}</span>
+                </li>
+              ))
+            }
+          </ol>
+
+          <div class="scope-note">
+            <h2>Scope note</h2>
+            <p>{service.scopeNote}</p>
+          </div>
+
+          <h2 class="detail__h2" id="faqs">Frequently asked questions</h2>
+          <div class="faqs">
+            {
+              service.faqs.map((f) => (
+                <details class="faq">
+                  <summary>
+                    <span>{f.q}</span>
+                  </summary>
+                  <p>{f.a}</p>
+                </details>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Sidebar ------------------------------------------------------ -->
+        <aside class="detail__aside">
+          <div class="aside-card aside-card--cta">
+            <h2>Discuss this service</h2>
+            <p>
+              Tell us how this works in your organisation today and we’ll come
+              back with a suggested scope.
+            </p>
+            <a class="btn btn--accent" href="/contact/">Request a Consultation</a>
+            <p class="aside-card__alt">
+              Or call <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>,
+              {' '}{site.hoursNote}, {site.hours}.
+            </p>
+          </div>
+
+          {
+            related.length > 0 && (
+              <div class="aside-card">
+                <h2>Related services</h2>
+                <ul class="aside-links">
+                  {related.map((r) => (
+                    <li>
+                      <a href={`/services/${r.slug}/`}>
+                        <span class="aside-links__num">{r.number}</span>
+                        <span>
+                          <strong>{r.title}</strong>
+                          <small>{r.summary}</small>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a class="arrow-link" href="/services/">
+                  View all services
+                </a>
+              </div>
+            )
+          }
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title={`Looking for support with ${service.title.toLowerCase()}?`}
+    text="Share a little about your organisation and current process. We’ll review the requirement and come back to you on scope, responsibilities and next steps."
+    primaryLabel="Discuss This Service"
+  />
+</Base>
+
+<style>
+  .detail {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .detail {
+      grid-template-columns: minmax(0, 1fr) 20.5rem;
+    }
+    .detail__aside {
+      position: sticky;
+      top: 7.5rem;
+    }
+  }
+
+  .detail__h2 {
+    font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.55rem);
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .detail__main > .detail__h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* --- Needs ------------------------------------------------------------ */
+  .needs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .needs li {
+    position: relative;
+    padding: 0.85rem 0 0.85rem 2.25rem;
+    border-bottom: 1px dashed var(--line);
+    color: var(--ink-2);
+  }
+
+  .needs li:last-child {
+    border-bottom: 0;
+  }
+
+  .needs li::before {
+    content: '';
+    position: absolute;
+    left: 0.35rem;
+    top: 1.7rem;
+    width: 0.85rem;
+    height: 1px;
+    background: var(--orange);
+  }
+
+  /* --- Activities ------------------------------------------------------- */
+  .activities li {
+    color: var(--ink-2);
+  }
+
+  /* --- Engagement ------------------------------------------------------- */
+  .engagement {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+    counter-reset: step;
+  }
+
+  .engagement li {
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+    color: var(--ink-2);
+  }
+
+  .engagement__num {
+    font-family: var(--serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--green-ink);
+    letter-spacing: 0.08em;
+  }
+
+  /* --- Scope note ------------------------------------------------------- */
+  .scope-note {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    padding: 1.35rem 1.5rem;
+    background: var(--grey);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .scope-note h2 {
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange-700);
+    margin-bottom: 0.5rem;
+  }
+
+  .scope-note p {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+    max-width: 72ch;
+  }
+
+  /* --- FAQs ------------------------------------------------------------- */
+  .faqs {
+    border-top: 1px solid var(--line);
+  }
+
+  .faq {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .faq summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.1rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    color: var(--navy);
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: '+';
+    font-family: var(--sans);
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--green-ink);
+    flex: none;
+    transition: transform 0.18s ease;
+  }
+
+  .faq[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .faq summary:hover {
+    color: var(--navy-700);
+  }
+
+  .faq p {
+    padding-bottom: 1.25rem;
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+    max-width: 72ch;
+  }
+
+  /* --- Aside ------------------------------------------------------------ */
+  .aside-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .aside-card + .aside-card {
+    margin-top: 1.25rem;
+  }
+
+  .aside-card h2 {
+    font-size: 1.0625rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .aside-card p {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .aside-card--cta {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .aside-card--cta h2 {
+    color: #fff;
+  }
+
+  .aside-card--cta p {
+    color: var(--on-navy-muted);
+  }
+
+  .aside-card--cta .btn {
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+
+  .aside-card__alt {
+    margin-top: 1rem;
+    font-size: 0.8125rem !important;
+    color: #7d92b4 !important;
+  }
+
+  .aside-card__alt a {
+    color: #fff;
+  }
+
+  .aside-links {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+
+  .aside-links li + li {
+    border-top: 1px solid var(--line);
+  }
+
+  .aside-links a {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0.5rem;
+    padding: 0.85rem 0;
+    text-decoration: none;
+  }
+
+  .aside-links__num {
+    font-family: var(--serif);
+    font-size: 0.75rem;
+    color: var(--green-ink);
+  }
+
+  .aside-links strong {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .aside-links small {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .aside-links a:hover strong {
+    text-decoration: underline;
+  }
+</style>
