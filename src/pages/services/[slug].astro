@@ -4,6 +4,7 @@ import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { services, getService } from '../../data/services';
 import { site } from '../../data/site';
+import { href, abs } from '../../lib/url';
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -24,9 +25,9 @@ const schema = [
     name: service.title,
     description: service.summary,
     serviceType: service.title,
-    provider: { '@id': 'https://www.ankhrservices.com/#organisation' },
+    provider: { '@id': abs('/', Astro.site) + '#organisation' },
     areaServed: site.serviceArea,
-    url: `https://www.ankhrservices.com/services/${service.slug}/`,
+    url: abs(`/services/${service.slug}/`, Astro.site),
   },
   {
     '@context': 'https://schema.org',
@@ -45,19 +46,19 @@ const schema = [
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.ankhrservices.com/',
+        item: abs('/', Astro.site),
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Services',
-        item: 'https://www.ankhrservices.com/services/',
+        item: abs('/services/', Astro.site),
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: service.title,
-        item: `https://www.ankhrservices.com/services/${service.slug}/`,
+        item: abs(`/services/${service.slug}/`, Astro.site),
       },
     ],
   },
@@ -134,7 +135,7 @@ const schema = [
               Tell us how this works in your organisation today and we’ll come
               back with a suggested scope.
             </p>
-            <a class="btn btn--accent" href="/contact/">Request a Consultation</a>
+            <a class="btn btn--accent" href={href('/contact/')}>Request a Consultation</a>
             <p class="aside-card__alt">
               Or call <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>,
               {' '}{site.hoursNote}, {site.hours}.
@@ -148,7 +149,7 @@ const schema = [
                 <ul class="aside-links">
                   {related.map((r) => (
                     <li>
-                      <a href={`/services/${r.slug}/`}>
+                      <a href={href(`/services/${r.slug}/`)}>
                         <span class="aside-links__num">{r.number}</span>
                         <span>
                           <strong>{r.title}</strong>
@@ -158,7 +159,7 @@ const schema = [
                     </li>
                   ))}
                 </ul>
-                <a class="arrow-link" href="/services/">
+                <a class="arrow-link" href={href('/services/')}>
                   View all services
                 </a>
               </div>

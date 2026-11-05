@@ -7,13 +7,14 @@ interface Props {
   year: number;
 }
 const { year } = Astro.props;
+import { href } from '../lib/url';
 ---
 
 <footer class="site-footer">
   <div class="container">
     <div class="site-footer__top">
       <div class="site-footer__brand">
-        <a href="/" aria-label={`${site.name} — home`}>
+        <a href={href('/')} aria-label={`${site.name} — home`}>
           <Logo variant="light" />
         </a>
         <p class="site-footer__blurb">
@@ -55,7 +56,7 @@ const { year } = Astro.props;
             {
               services.map((s) => (
                 <li>
-                  <a href={`/services/${s.slug}/`}>{s.title}</a>
+                  <a href={href(`/services/${s.slug}/`)}>{s.title}</a>
                 </li>
               ))
             }
@@ -64,12 +65,12 @@ const { year } = Astro.props;
         <div class="site-footer__col">
           <h2 class="site-footer__heading">Company</h2>
           <ul>
-            <li><a href="/about/">About Us</a></li>
-            <li><a href="/services/">All Services</a></li>
-            <li><a href="/industries/">Industries We Serve</a></li>
-            <li><a href="/why-ank/">Why Choose ANK</a></li>
-            <li><a href="/contact/">Contact Us</a></li>
-            <li><a href="/privacy-policy/">Privacy Policy</a></li>
+            <li><a href={href('/about/')}>About Us</a></li>
+            <li><a href={href('/services/')}>All Services</a></li>
+            <li><a href={href('/industries/')}>Industries We Serve</a></li>
+            <li><a href={href('/why-ank/')}>Why Choose ANK</a></li>
+            <li><a href={href('/contact/')}>Contact Us</a></li>
+            <li><a href={href('/privacy-policy/')}>Privacy Policy</a></li>
           </ul>
         </div>
         <div class="site-footer__col">
@@ -77,7 +78,7 @@ const { year } = Astro.props;
           <ul>
             <li><a href={telLink}>Call {site.phoneDisplay}</a></li>
             <li><a href={whatsappLink} rel="noopener">WhatsApp enquiry</a></li>
-            <li><a href="/contact/">Enquiry form</a></li>
+            <li><a href={href('/contact/')}>Enquiry form</a></li>
           </ul>
           {
             site.social.length > 0 && (

@@ -44,6 +44,7 @@ src/
   data/
     site.ts              All company details — phone, email, hours, form URL
     services.ts          All seven services: copy, activities, FAQs, SEO text
+  lib/url.ts             href() / abs() — base-path-aware link helpers
   layouts/Base.astro     <head>, metadata, JSON-LD, header + footer
   components/
     Header.astro         Utility bar, nav, services dropdown, mobile menu
@@ -59,10 +60,12 @@ src/
       index.astro        Services listing
       [slug].astro       One page per service, generated from services.ts
     404.astro
+    robots.txt.ts        Generated so the sitemap URL matches the build
   styles/
     global.css           Design tokens and shared components
     fonts.css            Generated @font-face rules (see "Fonts" below)
-public/                  Served as-is: icons, robots.txt, fonts, _headers
+    fonts/               woff2 files, hashed by Vite so base paths work
+public/                  Served as-is: icons, _headers, manifest
 google-apps-script/      The form handler to paste into Apps Script
 docs-source/             The original Word briefs this site was built from
 ```
@@ -87,6 +90,26 @@ needs touching. Keep the scope-safe wording ("support", "coordination",
 ### Page copy
 Each page's text lives in its own file under `src/pages/`.
 
+### Internal links — always use `href()`
+The site can be served from the domain root *or* from a sub-folder (a GitHub
+Pages project site such as `/website/`). Astro does not rewrite hrefs, so every
+internal link and asset path goes through the helper in `src/lib/url.ts`:
+
+```astro
+---
+import { href } from '../lib/url';
+---
+<a href={href('/services/')}>Services</a>
+```
+
+Write the path as if the site were at the root; the sub-folder is added when
+there is one. A plain `href="/services/"` works at the root but 404s on a
+project site. `abs(path, Astro.site)` does the same for absolute URLs in
+JSON-LD and metadata.
+
+Where the site is published is controlled by the `SITE_URL` and `BASE_PATH`
+environment variables — see [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ### Colours and type
 The tokens at the top of `src/styles/global.css`:
 
@@ -104,10 +127,17 @@ the darker one keeps text legible.
 
 ### Fonts
 
-`src/styles/fonts.css` is generated: it declares only the Latin and Latin-Extended
-subsets, pointing at the files in `public/fonts/`. The upstream
-`@fontsource` packages are devDependencies and are not needed at build time —
-they are kept so the font files can be regenerated or extra weights added.
+`src/styles/fonts.css` is generated: it declares only the Latin and
+Latin-Extended subsets, pointing at the woff2 files in `src/styles/fonts/`.
+
+They live under `src/` rather than `public/` on purpose — Vite then hashes them
+and rewrites the URLs, so they resolve correctly under a sub-path. CSS cannot
+read the base path itself, so a `public/fonts/` path would break on a project
+site.
+
+The upstream `@fontsource` packages are devDependencies and are not needed at
+build time — they are kept so the files can be regenerated or extra weights
+added.
 
 ---
 

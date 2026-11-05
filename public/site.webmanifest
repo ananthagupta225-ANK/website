@@ -2,12 +2,12 @@
   "name": "ANK HR Services",
   "short_name": "ANK HR",
   "description": "HR, payroll and compliance support for growing businesses.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "browser",
   "background_color": "#ffffff",
   "theme_color": "#08244F",
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

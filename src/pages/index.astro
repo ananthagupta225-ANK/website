@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { services } from '../data/services';
 import { site, telLink } from '../data/site';
+import { href, abs } from '../lib/url';
 
 const title = 'ANK HR Services | HR, Payroll & Compliance Support';
 const description =
@@ -68,7 +69,7 @@ const schema = [
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: site.name,
-    url: 'https://www.ankhrservices.com/',
+    url: abs('/', Astro.site),
   },
 ];
 ---
@@ -87,8 +88,8 @@ const schema = [
           what it does best.
         </p>
         <div class="btn-row">
-          <a class="btn btn--accent" href="/contact/">Request a Consultation</a>
-          <a class="btn btn--on-navy" href="/services/">Explore Our Services</a>
+          <a class="btn btn--accent" href={href('/contact/')}>Request a Consultation</a>
+          <a class="btn btn--on-navy" href={href('/services/')}>Explore Our Services</a>
         </div>
         <ul class="hero__meta">
           <li>Based in {site.locality}</li>
@@ -103,7 +104,7 @@ const schema = [
           {
             services.map((s) => (
               <li>
-                <a href={`/services/${s.slug}/`}>
+                <a href={href(`/services/${s.slug}/`)}>
                   <span class="hero__index-num">{s.number}</span>
                   <span class="hero__index-label">{s.title}</span>
                   <span class="hero__index-arrow" aria-hidden="true">
@@ -115,7 +116,7 @@ const schema = [
           }
         </ul>
         <p class="hero__panel-foot">
-          Need help across more than one area? <a href="/contact/">Talk to us</a
+          Need help across more than one area? <a href={href('/contact/')}>Talk to us</a
           > about a combined scope.
         </p>
       </aside>
@@ -173,7 +174,7 @@ const schema = [
       <div class="card-grid">
         {
           services.map((s) => (
-            <a class="card" href={`/services/${s.slug}/`}>
+            <a class="card" href={href(`/services/${s.slug}/`)}>
               <span class="card__num">{s.number}</span>
               <span class="card__title">{s.title}</span>
               <span class="card__text">{s.summary}</span>
@@ -188,7 +189,7 @@ const schema = [
             Describe your situation and we’ll suggest which areas of support are
             relevant before you commit to anything.
           </span>
-          <a class="arrow-link" href="/contact/">Discuss your requirements</a>
+          <a class="arrow-link" href={href('/contact/')}>Discuss your requirements</a>
         </div>
       </div>
     </div>
@@ -225,7 +226,7 @@ const schema = [
             coordination — the parts of HR that quietly take up the most time.
           </p>
           <div class="btn-row">
-            <a class="btn btn--on-navy" href="/why-ank/">More about our approach</a>
+            <a class="btn btn--on-navy" href={href('/why-ank/')}>More about our approach</a>
           </div>
           <p class="why-contact">
             Based in {site.locality} · Serving {site.serviceArea}<br />
@@ -264,7 +265,7 @@ const schema = [
         {industries.map((i) => <li>{i}</li>)}
       </ul>
       <p class="industry-foot">
-        <a class="arrow-link" href="/industries/">See how we work with each</a>
+        <a class="arrow-link" href={href('/industries/')}>See how we work with each</a>
       </p>
     </div>
   </section>

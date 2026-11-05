@@ -11,6 +11,7 @@ const {
   text = 'Tell us about your organisation and the support you are looking for. We’ll review your enquiry and come back to you on scope and next steps.',
   primaryLabel = 'Request a Consultation',
 } = Astro.props;
+import { href } from '../lib/url';
 ---
 
 <section class="cta-band">
@@ -20,7 +21,7 @@ const {
       <p class="lead">{text}</p>
     </div>
     <div class="cta-band__actions">
-      <a class="btn btn--accent" href="/contact/">{primaryLabel}</a>
+      <a class="btn btn--accent" href={href('/contact/')}>{primaryLabel}</a>
       <a class="btn btn--on-navy" href={telLink}>Call {site.phoneDisplay}</a>
       <p class="cta-band__alt">
         Prefer WhatsApp? <a href={whatsappLink} rel="noopener">Message us</a>

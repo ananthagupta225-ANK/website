@@ -6,6 +6,7 @@ import { services } from '../data/services';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
+import { href } from '../lib/url';
 ---
 
 <div class="topbar">
@@ -23,7 +24,7 @@ const isActive = (href: string) =>
 
 <header class="site-header" data-header>
   <div class="container site-header__inner">
-    <a href="/" class="site-header__brand" aria-label={`${site.name} — home`}>
+    <a href={href('/')} class="site-header__brand" aria-label={`${site.name} — home`}>
       <Logo />
     </a>
 
@@ -33,7 +34,7 @@ const isActive = (href: string) =>
           nav.map((item) => (
             <li class={item.href === '/services/' ? 'nav__item has-sub' : 'nav__item'}>
               <a
-                href={item.href}
+                href={href(item.href)}
                 class="nav__link"
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
@@ -44,7 +45,7 @@ const isActive = (href: string) =>
                   <ul class="subnav__list">
                     {services.map((s) => (
                       <li>
-                        <a href={`/services/${s.slug}/`}>
+                        <a href={href(`/services/${s.slug}/`)}>
                           <span class="subnav__num">{s.number}</span>
                           {s.title}
                         </a>
@@ -60,7 +61,7 @@ const isActive = (href: string) =>
     </nav>
 
     <div class="site-header__actions">
-      <a class="btn btn--primary btn--sm" href="/contact/">Request a Consultation</a>
+      <a class="btn btn--primary btn--sm" href={href('/contact/')}>Request a Consultation</a>
       <button
         class="burger"
         type="button"
@@ -80,7 +81,7 @@ const isActive = (href: string) =>
         {
           nav.map((item) => (
             <li>
-              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+              <a href={href(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>
@@ -92,13 +93,13 @@ const isActive = (href: string) =>
         {
           services.map((s) => (
             <li>
-              <a href={`/services/${s.slug}/`}>{s.title}</a>
+              <a href={href(`/services/${s.slug}/`)}>{s.title}</a>
             </li>
           ))
         }
       </ul>
       <div class="mobile-nav__cta">
-        <a class="btn btn--primary" href="/contact/">Request a Consultation</a>
+        <a class="btn btn--primary" href={href('/contact/')}>Request a Consultation</a>
         <a class="btn btn--outline" href={whatsappLink} rel="noopener">WhatsApp us</a>
       </div>
     </div>

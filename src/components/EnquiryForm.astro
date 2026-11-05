@@ -11,6 +11,7 @@ const employeeBands = [
   '251 – 500',
   'More than 500',
 ];
+import { href } from '../lib/url';
 ---
 
 <div class="enquiry">
@@ -165,7 +166,7 @@ const employeeBands = [
           <span>
             I agree that ANK HR Services may use the details submitted here to
             respond to this enquiry, as described in the{' '}
-            <a href="/privacy-policy/">Privacy Policy</a>.
+            <a href={href('/privacy-policy/')}>Privacy Policy</a>.
             <abbr title="required">*</abbr>
           </span>
         </label>

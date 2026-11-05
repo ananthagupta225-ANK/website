@@ -3,23 +3,33 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // ---------------------------------------------------------------------------
-// IMPORTANT (one-time setup before going live)
+// WHERE THIS SITE IS PUBLISHED
 //
-//  `site`  Set this to the final public URL, with no trailing slash.
-//          It is used for the sitemap, robots.txt and social-share metadata.
-//          e.g. 'https://www.ankhrservices.com'
+// Both values can be overridden with environment variables at build time, so
+// the same code deploys unchanged to GitHub Pages, Cloudflare Pages or a
+// custom domain.
 //
-//  `base`  Leave as-is for Cloudflare Pages or a GitHub Pages *user/custom
-//          domain* site. ONLY set it if you deploy to a GitHub *project*
-//          page served from a sub-folder, e.g. base: '/ank-hr-services'.
+//   SITE_URL    Public origin, no trailing slash.
+//   BASE_PATH   Sub-folder the site is served from, or empty for the root.
+//
+// Defaults below target the current GitHub Pages project site:
+//   https://ananthagupta225-ank.github.io/website/
+//
+// For a custom domain or Cloudflare Pages (served from the root), build with:
+//   SITE_URL=https://www.ankhrservices.com BASE_PATH= npm run build
 // ---------------------------------------------------------------------------
 
+const SITE_URL = process.env.SITE_URL ?? 'https://ananthagupta225-ank.github.io';
+const BASE_PATH = process.env.BASE_PATH ?? '/website';
+
 export default defineConfig({
-  site: 'https://www.ankhrservices.com',
+  site: SITE_URL,
+  // Astro expects `undefined` (not '') when the site lives at the domain root.
+  base: BASE_PATH === '' || BASE_PATH === '/' ? undefined : BASE_PATH,
   trailingSlash: 'always',
   build: {
     // Produces /services/payroll-management/index.html -> clean URLs on
-    // Cloudflare Pages and GitHub Pages alike.
+    // GitHub Pages and Cloudflare Pages alike.
     format: 'directory',
     inlineStylesheets: 'auto',
   },

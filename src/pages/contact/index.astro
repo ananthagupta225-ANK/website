@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import EnquiryForm from '../../components/EnquiryForm.astro';
 import { site, telLink, mailLink, whatsappLink } from '../../data/site';
+import { href, abs } from '../../lib/url';
 
 const title = 'Contact ANK HR Services';
 const description =
@@ -13,7 +14,7 @@ const schema = [
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: title,
-    url: 'https://www.ankhrservices.com/contact/',
+    url: abs('/contact/', Astro.site),
   },
 ];
 ---
@@ -91,7 +92,7 @@ const schema = [
             </ol>
             <p class="small text-muted">
               Details you send are used only to respond to your enquiry. See our
-              <a href="/privacy-policy/">Privacy Policy</a>.
+              <a href={href('/privacy-policy/')}>Privacy Policy</a>.
             </p>
           </div>
         </aside>

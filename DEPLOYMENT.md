@@ -56,9 +56,33 @@ the ANK symbol:
 
 ### The site address
 
-In `astro.config.mjs`, set `site` to the final public URL (no trailing slash).
-It is used for the sitemap, canonical URLs and social share metadata. Then
-update the `Sitemap:` line in `public/robots.txt` to match.
+The public URL is set by two environment variables, read in
+`astro.config.mjs`. They are what make the same code work on GitHub Pages,
+Cloudflare Pages and a custom domain without edits.
+
+| Variable | Meaning | Example |
+|---|---|---|
+| `SITE_URL` | Public origin, no trailing slash | `https://www.ankhrservices.com` |
+| `BASE_PATH` | Sub-folder, or empty for the domain root | `/website` or empty |
+
+Defaults target the current GitHub Pages project site
+(`https://ananthagupta225-ank.github.io/website/`). The GitHub Actions workflow
+sets both automatically, so there is normally nothing to change.
+
+For a custom domain, build with:
+
+```bash
+SITE_URL=https://www.ankhrservices.com BASE_PATH= npm run build
+```
+
+`robots.txt` and the sitemap are generated from these values, so they always
+match.
+
+**Internal links:** because the site may live in a sub-folder, every internal
+link and asset path goes through the `href()` helper in `src/lib/url.ts`.
+Write paths as if the site were at the root — `href('/services/')` — and the
+sub-folder is added when there is one. A plain `href="/services/"` would break
+on a project site, so always use the helper.
 
 ---
 
@@ -172,7 +196,10 @@ The build output is plain static files in `dist/` — no server required.
    - **Framework preset:** `Astro`
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`
-   - **Environment variable:** `NODE_VERSION` = `24`
+   - **Environment variables:**
+     `NODE_VERSION` = `24`,
+     `SITE_URL` = your final URL (e.g. `https://www.ankhrservices.com`),
+     `BASE_PATH` = leave empty — Cloudflare serves from the domain root
 4. Deploy. Every push to `main` then rebuilds automatically.
 5. **Custom domain:** Pages project → **Custom domains → Set up a domain**.
    HTTPS is issued automatically.
@@ -182,21 +209,37 @@ fonts and hashed assets. Cloudflare picks this file up automatically.
 
 ### Option B — GitHub Pages
 
-A workflow is included at `.github/workflows/deploy.yml`.
+A workflow is included at `.github/workflows/deploy.yml`, triggered on pushes
+to `main` or `master`.
+
+> **⚠ Required, and it must be done by a repository admin:**
+> **Settings → Pages → Build and deployment → Source → "GitHub Actions"**
+>
+> If this is left on **"Deploy from a branch"**, GitHub ignores the workflow and
+> runs its own legacy **Jekyll** builder against the raw source instead. Jekyll
+> tries to read Astro's `---` frontmatter as YAML and the build fails with
+> *"Invalid YAML front matter in …​.astro"*. Changing this setting is the fix.
 
 1. Push the project to GitHub.
-2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
-3. Push to `main`. The workflow builds and publishes.
-4. **Custom domain:** set it under Settings → Pages and tick
-   *Enforce HTTPS*.
+2. Set the Pages source to **GitHub Actions** (above).
+3. Push to `main` or `master`. The workflow builds and publishes.
+4. **Custom domain:** set it under Settings → Pages and tick *Enforce HTTPS*.
 
-If the site is served from a sub-path — `https://<user>.github.io/<repo>/`
-rather than a custom domain — set `base: '/<repo>'` in `astro.config.mjs`
-as well, or every internal link will 404.
+Sub-paths are handled automatically: `actions/configure-pages` reports the real
+origin and base path, and the workflow passes them to the build. A project site
+at `https://<user>.github.io/<repo>/` and a custom domain at the root both work
+with no code change.
 
 `public/.nojekyll` is already present so GitHub does not strip Astro's
-`_astro/` asset folder. Note that GitHub Pages ignores `public/_headers`; the
-security headers only take effect on Cloudflare.
+`_astro/` asset folder.
+
+Two GitHub Pages limitations worth knowing:
+
+- `public/_headers` is ignored, so the security headers apply only on
+  Cloudflare.
+- On a **project** site, `robots.txt` is served at `/<repo>/robots.txt`, but
+  crawlers only read it from the domain root. Submit the sitemap URL directly
+  in Search Console instead. A custom domain removes this problem.
 
 ---
 

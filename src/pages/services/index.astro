@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { services } from '../../data/services';
+import { href, abs } from '../../lib/url';
 
 const title = 'HR, Payroll & Compliance Services | ANK HR Services';
 const description =
@@ -17,7 +18,7 @@ const schema = [
       '@type': 'ListItem',
       position: i + 1,
       name: s.title,
-      url: `https://www.ankhrservices.com/services/${s.slug}/`,
+      url: abs(`/services/${s.slug}/`, Astro.site),
     })),
   },
 ];
@@ -40,10 +41,10 @@ const schema = [
               <div class="service-row__head">
                 <span class="service-row__num">{s.number}</span>
                 <h2 class="service-row__title">
-                  <a href={`/services/${s.slug}/`}>{s.title}</a>
+                  <a href={href(`/services/${s.slug}/`)}>{s.title}</a>
                 </h2>
                 <p class="service-row__lead">{s.lead}</p>
-                <a class="arrow-link" href={`/services/${s.slug}/`}>
+                <a class="arrow-link" href={href(`/services/${s.slug}/`)}>
                   View service details
                 </a>
               </div>
@@ -58,7 +59,7 @@ const schema = [
                   <p class="service-row__more">
                     + {s.activities.length - 5} further{' '}
                     {s.activities.length - 5 === 1 ? 'activity' : 'activities'} —{' '}
-                    <a href={`/services/${s.slug}/`}>see the full list</a>
+                    <a href={href(`/services/${s.slug}/`)}>see the full list</a>
                   </p>
                 )}
               </div>
