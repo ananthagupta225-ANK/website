@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { site, nav, telLink, whatsappLink } from '../data/site';
+import { site, nav, whatsappLink } from '../data/site';
 import { services } from '../data/services';
 
 const path = Astro.url.pathname;
@@ -9,18 +9,6 @@ const isActive = (href: string) =>
 import { href } from '../lib/url';
 ---
 
-<div class="topbar">
-  <div class="container topbar__inner">
-    <p class="topbar__item">
-      <span aria-hidden="true">◆</span>
-      {site.locality}, {site.region} &nbsp;·&nbsp; Serving {site.serviceArea}
-    </p>
-    <p class="topbar__item topbar__item--right">
-      <span class="topbar__hours">{site.hoursNote}, {site.hours}</span>
-      <a href={telLink}>{site.phoneDisplay}</a>
-    </p>
-  </div>
-</div>
 
 <header class="site-header" data-header>
   <div class="container site-header__inner">
@@ -121,56 +109,12 @@ import { href } from '../lib/url';
 </header>
 
 <style>
-  /* --- Utility bar ------------------------------------------------------ */
-  .topbar {
-    background: var(--navy-900);
-    color: var(--on-navy-muted);
-    font-size: 0.8125rem;
-  }
 
-  .topbar__inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    min-height: 2.5rem;
-  }
 
-  .topbar__item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
 
-  .topbar__item span[aria-hidden] {
-    color: var(--green);
-    font-size: 0.5rem;
-  }
 
-  .topbar__item--right {
-    gap: 1.25rem;
-  }
 
-  .topbar a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-  }
 
-  .topbar a:hover {
-    text-decoration: underline;
-    color: #fff;
-  }
-
-  @media (max-width: 860px) {
-    .topbar__item:first-child,
-    .topbar__hours {
-      display: none;
-    }
-    .topbar__inner {
-      justify-content: flex-end;
-    }
-  }
 
   /* --- Header ----------------------------------------------------------- */
   .site-header {
