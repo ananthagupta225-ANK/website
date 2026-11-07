@@ -4,18 +4,22 @@
    redrawing or recreating the logo artwork, so nothing is invented here. */
 import { site } from '../data/site';
 import { href } from '../lib/url';
+import { hasAsset } from '../lib/assets';
 
 interface Props {
   variant?: 'dark' | 'light';
 }
 const { variant = 'dark' } = Astro.props;
+
+// Only use the logo file once it actually exists in public/.
+const logo = hasAsset(site.logo) ? site.logo : '';
 ---
 
 {
-  site.logo ? (
+  logo ? (
     <img
       class="logo-img"
-      src={href(site.logo)}
+      src={href(logo)}
       width={site.logoWidth}
       height={site.logoHeight}
       alt={`${site.name} logo`}

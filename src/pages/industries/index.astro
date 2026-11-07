@@ -2,47 +2,55 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import Watermark from '../../components/Watermark.astro';
+import Figure from '../../components/Figure.astro';
 
 const title = 'Industries We Serve | ANK HR Services';
 const description =
-  'HR, payroll and compliance support for offices, retail and multi-location businesses, factories, service organisations, growing SMEs and contract workforces.';
+  'HR, payroll and compliance support for corporate offices, manufacturing and factories, retail and hospitality, healthcare, IT & ITES and service organisations.';
 
 const industries = [
   {
     n: '01',
-    name: 'Offices and corporate teams',
+    slug: 'corporate-offices',
+    name: 'Corporate Offices',
     text: 'Structured HR administration, employee records, leave and attendance processes, and payroll coordination for office-based teams.',
     relevant: ['Payroll Management', 'HR Operations & Consultancy', 'HR Policies & Documentation'],
   },
   {
     n: '02',
-    name: 'Retail and multi-location businesses',
-    text: 'Consistent documentation and payroll inputs across branches, with a common format applied at every location.',
-    relevant: ['Payroll Management', 'HR Operations & Consultancy', 'Factory & Establishment Compliance'],
+    slug: 'manufacturing-factories',
+    name: 'Manufacturing & Factories',
+    text: 'Registers, licence and renewal documentation, workforce records, and inspection document organisation for factory environments.',
+    relevant: ['Factory & Establishment Compliance', 'Contract Labour Management', 'PF, ESI & Labour Law Scrutiny Cases'],
   },
   {
     n: '03',
-    name: 'Manufacturing and factory operations',
-    text: 'Registers, licence and renewal documentation, workforce records, and inspection document organisation for factory environments.',
-    relevant: ['Factory & Establishment Compliance', 'Contract Labour Management', 'PF, ESI & Labour Law Compliances'],
+    slug: 'retail-hospitality',
+    name: 'Retail & Hospitality',
+    text: 'Consistent documentation and payroll inputs across branches and outlets, with one format applied at every location.',
+    relevant: ['Payroll Management', 'HR Operations & Consultancy', 'Recruitment & Staffing'],
   },
   {
     n: '04',
-    name: 'Service-sector organisations',
+    slug: 'healthcare-institutions',
+    name: 'Healthcare & Institutions',
+    text: 'Shift-based attendance, statutory records and employee lifecycle documentation for hospitals, clinics and institutions.',
+    relevant: ['Payroll Management', 'PF, ESI & Labour Law Compliances', 'HR Policies & Documentation'],
+  },
+  {
+    n: '05',
+    slug: 'it-ites',
+    name: 'IT & ITES',
     text: 'Recruitment coordination, onboarding and employee lifecycle support for teams that grow and change frequently.',
     relevant: ['Recruitment & Staffing', 'HR Operations & Consultancy', 'Payroll Management'],
   },
   {
-    n: '05',
-    name: 'Growing small and medium businesses',
-    text: 'A defined set of recurring HR tasks coordinated from outside, for organisations without a full in-house HR function.',
-    relevant: ['HR Operations & Consultancy', 'HR Policies & Documentation', 'Payroll Management'],
-  },
-  {
     n: '06',
-    name: 'Organisations engaging contract workforces',
-    text: 'Contractor documentation checklists, wage and attendance record coordination, and audit document preparation support.',
-    relevant: ['Contract Labour Management', 'PF, ESI & Labour Law Compliances', 'Factory & Establishment Compliance'],
+    slug: 'service-organisations',
+    name: 'Service Organisations',
+    text: 'Day-to-day HR operations, documentation and compliance coordination for service-sector and professional teams.',
+    relevant: ['HR Operations & Consultancy', 'HR Policies & Documentation', 'PF, ESI & Labour Law Compliances'],
   },
 ];
 ---
@@ -55,17 +63,24 @@ const industries = [
     breadcrumbs={[{ label: 'Industries' }]}
   />
 
-  <section class="section">
+  <section class="section has-watermark">
+    <Watermark position="top-right" size={460} opacity={0.04} tone="navy" />
     <div class="container">
       <ul class="ind-list">
         {
-          industries.map((i) => (
-            <li class="ind">
-              <div class="ind__left">
+          industries.map((i, idx) => (
+            <li class="ind" data-reveal={idx % 2 === 0 ? 'left' : 'right'}>
+              <div class="ind__media">
+                <Figure
+                  src={`/images/industries/${i.slug}.jpg`}
+                  alt={`${i.name} — HR, payroll and compliance support from ANK HR Services`}
+                  ratio="3 / 2"
+                  label={i.name}
+                />
+              </div>
+              <div class="ind__body">
                 <span class="ind__num">{i.n}</span>
                 <h2 class="ind__name">{i.name}</h2>
-              </div>
-              <div class="ind__right">
                 <p class="ind__text">{i.text}</p>
                 <p class="ind__label">Commonly relevant services</p>
                 <ul class="ind__tags">
@@ -79,7 +94,7 @@ const industries = [
         }
       </ul>
 
-      <div class="ind-note">
+      <div class="ind-note" data-reveal="up">
         <p>
           This is a guide to the business environments we can discuss, not a
           claim of specialist experience in any particular sector. Whether we
@@ -105,9 +120,10 @@ const industries = [
 
   .ind {
     display: grid;
-    gap: 1rem 3.5rem;
-    padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
+    gap: 1.5rem 3rem;
+    padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
     border-top: 1px solid var(--line);
+    align-items: center;
   }
 
   .ind:first-child {
@@ -117,7 +133,11 @@ const industries = [
 
   @media (min-width: 880px) {
     .ind {
-      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    }
+    /* Alternate the photograph side down the page. */
+    .ind:nth-child(even) .ind__media {
+      order: 2;
     }
   }
 
@@ -133,7 +153,7 @@ const industries = [
 
   .ind__name {
     font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.55rem);
-    max-width: 20ch;
+    margin-bottom: 0.75rem;
   }
 
   .ind__text {

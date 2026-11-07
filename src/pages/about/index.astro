@@ -2,67 +2,79 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { site } from '../../data/site';
+import Watermark from '../../components/Watermark.astro';
+import Figure from '../../components/Figure.astro';
+import { site, telLink } from '../../data/site';
 
 const title = 'About ANK HR Services | HR and Payroll Support';
 const description =
-  'How ANK HR Services works: agreed scopes, organised documentation and clear coordination across HR operations, payroll, recruitment and compliance support.';
+  'ANK HR Services is a professional HR consulting and services organisation providing payroll, compliance, HR operations, recruitment and workforce support.';
 ---
 
 <Base title={title} description={description}>
   <PageHero
-    label="About us"
+    label="About Us"
     title="About ANK HR Services"
-    lead="ANK HR Services provides business-focused support across HR operations, payroll management, employee documentation, recruitment and statutory compliance coordination."
-    breadcrumbs={[{ label: 'About' }]}
+    lead="A professional HR consulting and services organisation committed to providing comprehensive HR solutions to businesses."
+    breadcrumbs={[{ label: 'About Us' }]}
   />
 
-  <section class="section">
+  <section class="section has-watermark">
+    <Watermark position="top-right" size={480} opacity={0.04} tone="navy" />
     <div class="container">
-      <div class="split split--sticky">
-        <div>
-          <p class="label">Who we are</p>
-          <h2>A service partner for everyday people processes</h2>
+      <div class="intro">
+        <div class="intro__media" data-reveal="left">
+          <Figure
+            src="/images/about-ank.jpg"
+            alt="An ANK HR Services consultant in a client meeting discussing HR and payroll requirements"
+            ratio="4 / 4.6"
+            label="About photograph — HR consultant with a client"
+          />
         </div>
-        <div class="prose measure">
-          <p class="lead">
-            ANK HR Services supports organisations with practical HR, payroll,
-            recruitment, documentation and compliance-related services.
-          </p>
-          <p>
-            We understand that well-organised people processes matter to
-            day-to-day business operations. We aim to help businesses organise
-            these processes through clear coordination, structured documentation
-            and service scopes tailored to their requirements.
-          </p>
-          <p>
-            Our approach begins with understanding the client’s business,
-            workforce, current process and priorities. We then discuss the
-            services required, agree on responsibilities, and work with the
-            client’s team to coordinate the agreed deliverables — maintaining
-            organised records and communicating clearly throughout.
-          </p>
+
+        <div class="intro__copy" data-reveal="right">
+          <p class="label">Who we are</p>
+          <h2>Simplifying complex HR processes</h2>
+          <div class="prose">
+            <p class="lead">
+              We specialise in payroll management, statutory compliance, HR
+              operations, recruitment, workforce management and labour law
+              support.
+            </p>
+            <p>
+              Our objective is to simplify complex HR processes through
+              practical solutions, structured documentation and dependable
+              professional support.
+            </p>
+            <p>
+              Our approach begins with understanding the client’s business,
+              workforce, current process and priorities. We then discuss the
+              services required, agree on responsibilities, and work with the
+              client’s team to coordinate the agreed deliverables — maintaining
+              organised records and communicating clearly throughout.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--grey">
+  <section class="section section--grey has-watermark">
+    <Watermark position="bottom-left" size={420} opacity={0.04} tone="navy" />
     <div class="container">
-      <div class="mv">
-        <article class="mv__card">
-          <p class="label">Our mission</p>
+      <div class="mv" data-stagger>
+        <article class="mv__card" data-reveal="up">
+          <p class="label">Our Mission</p>
           <p class="mv__text">
-            To support organisations with practical HR services and organised
-            processes that help improve day-to-day administration and
-            employee-related operations.
+            To simplify HR management and statutory compliance through
+            reliable, efficient and practical HR solutions.
           </p>
         </article>
-        <article class="mv__card">
-          <p class="label">Our vision</p>
+        <article class="mv__card" data-reveal="up">
+          <p class="label">Our Vision</p>
           <p class="mv__text">
-            To become a trusted partner for organisations seeking coordinated
-            support across the employee lifecycle.
+            To become a trusted one-stop destination for comprehensive HR
+            services and business workforce solutions.
           </p>
         </article>
       </div>
@@ -72,11 +84,11 @@ const description =
   <section class="section">
     <div class="container">
       <div class="split">
-        <div>
+        <div data-reveal="up">
           <p class="label">How we work</p>
           <h2>What you can expect from an engagement</h2>
         </div>
-        <ul class="ticks expectations">
+        <ul class="ticks expectations" data-reveal="up">
           <li>
             A conversation about your organisation, workforce and current
             process before anything is proposed.
@@ -104,7 +116,7 @@ const description =
 
   <section class="section section--tight section--bordered">
     <div class="container">
-      <div class="facts">
+      <div class="facts" data-reveal="up">
         <div class="facts__item">
           <p class="facts__label">Based in</p>
           <p class="facts__value">{site.locality}, {site.region}</p>
@@ -119,9 +131,7 @@ const description =
         </div>
         <div class="facts__item">
           <p class="facts__label">Speak to us</p>
-          <p class="facts__value">
-            <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
-          </p>
+          <p class="facts__value"><a href={telLink}>{site.phoneDisplay}</a></p>
         </div>
       </div>
     </div>
@@ -131,6 +141,22 @@ const description =
 </Base>
 
 <style>
+  .intro {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (min-width: 940px) {
+    .intro {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    }
+  }
+
+  .intro__copy .prose {
+    margin-top: 1.35rem;
+  }
+
   .mv {
     display: grid;
     gap: 1px;
