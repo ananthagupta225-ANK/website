@@ -11,8 +11,15 @@
 /* ========================= SETTINGS — EDIT THESE ========================= */
 
 var CONFIG = {
-  // The tab name inside the spreadsheet. Created automatically if missing.
+  // The tab name inside the spreadsheet. Created automatically if missing,
+  // so you will see a new "Enquiries" tab appear next to Sheet1.
   SHEET_NAME: 'Enquiries',
+
+  // Only used as a fallback. When this script is created from inside the
+  // spreadsheet (Extensions -> Apps Script) it already knows which file it
+  // belongs to and this is ignored. It is here so the script still works if
+  // it is ever created as a standalone project instead.
+  SPREADSHEET_ID: '1LcpN9JTYoj6RB5K9kwuf3NyNRuKgP_nTGMbxJhUf-Xs',
 
   // Where to email each new enquiry. Leave as '' to turn notifications off.
   // Several addresses can be separated by commas.
@@ -150,8 +157,27 @@ function trim(value) {
   return value === null || value === undefined ? '' : String(value).trim();
 }
 
-function getSheet() {
+/** The spreadsheet this script writes to. */
+function getBook() {
+  // Container-bound script: this is the file the script lives in.
   var book = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Standalone script: fall back to opening the sheet by its ID.
+  if (!book && CONFIG.SPREADSHEET_ID) {
+    book = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+  }
+
+  if (!book) {
+    throw new Error(
+      'No spreadsheet available. Either create this script from inside the ' +
+      'sheet (Extensions > Apps Script), or set CONFIG.SPREADSHEET_ID.'
+    );
+  }
+  return book;
+}
+
+function getSheet() {
+  var book = getBook();
   var sheet = book.getSheetByName(CONFIG.SHEET_NAME);
 
   if (!sheet) {
@@ -200,7 +226,7 @@ function notify(enquiry) {
     '-------------------',
     enquiry.message,
     '',
-    'Open the enquiry sheet: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl()
+    'Open the enquiry sheet: ' + getBook().getUrl()
   ];
 
   MailApp.sendEmail({
