@@ -73,7 +73,8 @@ export const site = {
      google-apps-script/Code.gs — full instructions in DEPLOYMENT.md.
      Until this is set the form stays disabled and shows the phone /
      WhatsApp fallback instead of silently losing enquiries. ----------- */
-  formEndpoint: '' as string,
+  formEndpoint:
+    'https://script.google.com/macros/s/AKfycbw2mi8u3iSiPRi1JIic7hRyS7vUQlDIE2LwQjN7N27gadcqcD5lMFUQMST3yI1jTjKq9Q/exec' as string,
 };
 
 export const nav = [
