@@ -16,7 +16,9 @@ var CONFIG = {
 
   // Where to email each new enquiry. Leave as '' to turn notifications off.
   // Several addresses can be separated by commas.
-  NOTIFY_EMAIL: '',
+  // ⚠ CONFIRM this address is right — the brief gives ankservices.com, not
+  // ankhrservices.com. Enquiries are saved to the sheet either way.
+  NOTIFY_EMAIL: 'ananthagupta@ankservices.com',
 
   // Reject submissions completed faster than this many seconds. Real people
   // take longer than this; most bots do not.
@@ -100,19 +102,26 @@ function doPost(e) {
     ]);
 
     // --- Optional email notification ---------------------------------------
+    // Wrapped separately: the enquiry is already safely in the sheet, so a
+    // mail failure (bad address, daily quota reached) must not make a
+    // successful submission look like an error to the visitor.
     if (CONFIG.NOTIFY_EMAIL) {
-      notify({
-        name: name,
-        company: trim(data.company),
-        email: email,
-        phone: phone,
-        services: trim(data.services),
-        employees: trim(data.employees),
-        preferredContact: trim(data.preferredContact),
-        message: message,
-        page: trim(data.page),
-        timestamp: timestamp
-      });
+      try {
+        notify({
+          name: name,
+          company: trim(data.company),
+          email: email,
+          phone: phone,
+          services: trim(data.services),
+          employees: trim(data.employees),
+          preferredContact: trim(data.preferredContact),
+          message: message,
+          page: trim(data.page),
+          timestamp: timestamp
+        });
+      } catch (mailErr) {
+        console.error('Enquiry saved, but the notification email failed: ' + mailErr);
+      }
     }
 
     return respond({ ok: true });
