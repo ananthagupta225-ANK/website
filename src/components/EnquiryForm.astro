@@ -479,8 +479,9 @@ import { href } from '../lib/url';
     const success = document.getElementById('form-success') as HTMLElement;
     const submit = form.querySelector('[data-submit]') as HTMLButtonElement;
 
+    const openedAt = Date.now();
     (document.getElementById('f-started') as HTMLInputElement).value =
-      String(Date.now());
+      String(openedAt);
     (document.getElementById('f-page') as HTMLInputElement).value =
       window.location.pathname;
 
@@ -580,6 +581,10 @@ import { href } from '../lib/url';
         page: String(data.get('page') ?? ''),
         website: String(data.get('website') ?? ''),
         startedAt: String(data.get('startedAt') ?? ''),
+        // How long the visitor actually spent on the form. Measured entirely
+        // on their clock, so the spam check cannot be thrown off by a device
+        // whose clock disagrees with Google's.
+        elapsedMs: String(Date.now() - openedAt),
       };
 
       submit.disabled = true;
@@ -597,8 +602,24 @@ import { href } from '../lib/url';
         });
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const result = await response.json().catch(() => ({ ok: true }));
-        if (result && result.ok === false) throw new Error(result.error ?? 'rejected');
+
+        // Treat ONLY a valid JSON body with ok:true as success. Apps Script
+        // answers a failed execution with an HTML error page and HTTP 200, so
+        // anything that is not our own JSON means the enquiry did not land —
+        // reporting success there would lose it silently.
+        const text = await response.text();
+        let result;
+        try {
+          result = JSON.parse(text);
+        } catch {
+          throw new Error(
+            'Endpoint did not return JSON — the Apps Script web app is likely ' +
+              'unauthorised or misconfigured.'
+          );
+        }
+        if (!result || result.ok !== true) {
+          throw new Error(result && result.error ? result.error : 'rejected');
+        }
 
         form.hidden = true;
         success.hidden = false;

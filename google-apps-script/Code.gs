@@ -69,12 +69,16 @@ function doPost(e) {
     }
 
     // 2. Time trap: submissions completed implausibly fast are discarded.
-    var started = Number(data.startedAt || 0);
-    if (started > 0) {
-      var seconds = (Date.now() - started) / 1000;
-      if (seconds < CONFIG.MIN_SECONDS) {
-        return respond({ ok: true, note: 'discarded' });
-      }
+    //    elapsedMs is measured entirely on the visitor's own clock, so a
+    //    device whose clock disagrees with Google's is not wrongly treated as
+    //    a bot. The startedAt maths is only a fallback for older page loads.
+    var elapsed = Number(data.elapsedMs);
+    if (!isFinite(elapsed) || elapsed < 0) {
+      var started = Number(data.startedAt || 0);
+      elapsed = started > 0 ? Date.now() - started : NaN;
+    }
+    if (isFinite(elapsed) && elapsed >= 0 && elapsed / 1000 < CONFIG.MIN_SECONDS) {
+      return respond({ ok: true, note: 'discarded' });
     }
 
     // --- Validation (mirrors the browser-side rules) -----------------------
