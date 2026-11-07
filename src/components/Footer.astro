@@ -2,6 +2,7 @@
 import Logo from './Logo.astro';
 import { site, telLink, mailLink, whatsappLink } from '../data/site';
 import { services } from '../data/services';
+import Watermark from './Watermark.astro';
 
 interface Props {
   year: number;
@@ -10,7 +11,8 @@ const { year } = Astro.props;
 import { href } from '../lib/url';
 ---
 
-<footer class="site-footer">
+<footer class="site-footer has-watermark">
+  <Watermark position="bottom-right" size={560} opacity={0.05} tone="light" />
   <div class="container">
     <div class="site-footer__top">
       <div class="site-footer__brand">
@@ -71,6 +73,7 @@ import { href } from '../lib/url';
             <li><a href={href('/why-ank/')}>Why Choose ANK</a></li>
             <li><a href={href('/contact/')}>Contact Us</a></li>
             <li><a href={href('/privacy-policy/')}>Privacy Policy</a></li>
+            <li><a href={href('/terms/')}>Terms &amp; Conditions</a></li>
           </ul>
         </div>
         <div class="site-footer__col">
@@ -78,6 +81,9 @@ import { href } from '../lib/url';
           <ul>
             <li><a href={telLink}>Call {site.phoneDisplay}</a></li>
             <li><a href={whatsappLink} rel="noopener">WhatsApp enquiry</a></li>
+            {!site.emailIsPlaceholder && (
+              <li><a href={mailLink}>{site.email}</a></li>
+            )}
             <li><a href={href('/contact/')}>Enquiry form</a></li>
           </ul>
           {

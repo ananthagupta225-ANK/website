@@ -4,23 +4,28 @@
    redrawing or recreating the logo artwork, so nothing is invented here. */
 import { site } from '../data/site';
 import { href } from '../lib/url';
+import { hasAsset } from '../lib/assets';
 
 interface Props {
   variant?: 'dark' | 'light';
 }
 const { variant = 'dark' } = Astro.props;
+
+// Only use the logo file once it actually exists in public/.
+const logo = hasAsset(site.logo) ? site.logo : '';
 ---
 
 {
-  site.logo ? (
-    <img
-      class="logo-img"
-      src={href(site.logo)}
-      width={site.logoWidth}
-      height={site.logoHeight}
-      alt={`${site.name} logo`}
-      data-variant={variant}
-    />
+  logo ? (
+    <span class="logo-plate" data-variant={variant}>
+      <img
+        class="logo-img"
+        src={href(logo)}
+        width={site.logoWidth}
+        height={site.logoHeight}
+        alt={`${site.name} logo`}
+      />
+    </span>
   ) : (
     <span class="wordmark" data-variant={variant}>
       <span class="wordmark__ank">ANK</span>
@@ -31,10 +36,39 @@ const { variant = 'dark' } = Astro.props;
 }
 
 <style>
+  /* Logo widths follow brief section 2:
+     desktop 160–190px, tablet 140–160px, mobile 120–140px. */
   .logo-img {
+    display: block;
     height: auto;
-    width: auto;
-    max-height: 44px;
+    width: 180px;
+  }
+
+  @media (max-width: 1020px) {
+    .logo-img {
+      width: 152px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .logo-img {
+      width: 134px;
+    }
+  }
+
+  /* The supplied logo is drawn for light backgrounds, and its navy elements
+     have little contrast on the dark footer. Rather than recolour it — the
+     brief forbids that — the dark variant sits the UNALTERED logo on a white
+     plate. */
+  .logo-plate {
+    display: inline-block;
+    line-height: 0;
+  }
+
+  .logo-plate[data-variant='light'] {
+    background: #fff;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radius);
   }
 
   .wordmark {

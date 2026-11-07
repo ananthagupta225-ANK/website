@@ -1,209 +1,262 @@
 ---
 import Base from '../layouts/Base.astro';
-import CtaBand from '../components/CtaBand.astro';
+import Watermark from '../components/Watermark.astro';
+import Figure from '../components/Figure.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
 import { services } from '../data/services';
-import { site, telLink } from '../data/site';
+import { site, telLink, mailLink, whatsappLink } from '../data/site';
 import { href, abs } from '../lib/url';
 
 const title = 'ANK HR Services | HR, Payroll & Compliance Support';
 const description =
-  'One-stop HR support in Hyderabad: payroll, HR operations, documentation, recruitment and statutory compliance coordination for Telangana & Andhra Pradesh.';
-
-const steps = [
-  {
-    n: '01',
-    t: 'Tell us about your organisation',
-    d: 'Share your workforce size, current process and the areas where you need support.',
-  },
-  {
-    n: '02',
-    t: 'We review scope together',
-    d: 'We discuss the current process, what is required and the information involved.',
-  },
-  {
-    n: '03',
-    t: 'We agree responsibilities',
-    d: 'Deliverables, responsibilities, timelines and commercials are confirmed in writing.',
-  },
-  {
-    n: '04',
-    t: 'We coordinate and report',
-    d: 'The agreed services are coordinated, with clear communication on progress.',
-  },
-];
+  'Your one-stop partner for all HR services — payroll management, statutory compliance, HR operations, recruitment and workforce support for businesses in Hyderabad.';
 
 const whyPoints = [
-  {
-    t: 'One point of contact',
-    d: 'Discuss several people-related requirements with one service partner instead of coordinating many.',
-  },
-  {
-    t: 'Support scoped to your organisation',
-    d: 'Engagements are built around your workforce, locations and existing process — not a fixed package.',
-  },
-  {
-    t: 'Structured documentation',
-    d: 'Records, registers, trackers and formats are organised so information can be found when it is needed.',
-  },
-  {
-    t: 'Clear communication',
-    d: 'Responsibilities, approvals and information requirements are agreed and stated up front.',
-  },
-  {
-    t: 'Designed around business requirements',
-    d: 'Processes are shaped to fit how your business actually runs day to day.',
-  },
+  { n: '01', t: 'Comprehensive HR Solutions', d: 'Payroll, compliance, operations, documentation, recruitment and workforce support, coordinated through a single point of contact.' },
+  { n: '02', t: 'Payroll Management Expertise', d: 'Structured monthly cycles, accurate inputs and consistent reporting, built around how your organisation already works.' },
+  { n: '03', t: 'Statutory Compliance Support', d: 'PF, ESI, labour law, factory and establishment documentation kept organised against an agreed calendar.' },
+  { n: '04', t: 'Practical HR Consulting', d: 'Advice you can act on — process reviews and recommendations shaped to your workforce, not to a template.' },
+  { n: '05', t: 'Structured Documentation', d: 'Records, registers, trackers and formats organised so the right document is there when it is asked for.' },
+  { n: '06', t: 'Reliable Client Coordination', d: 'Clear ownership of responsibilities, approvals and timelines, with communication you do not have to chase.' },
+];
+
+const approach = [
+  { n: '01', t: 'Understand', d: 'Understand the client’s business, workforce and HR requirements.' },
+  { n: '02', t: 'Analyse', d: 'Review existing HR processes, payroll structures and applicable compliance requirements.' },
+  { n: '03', t: 'Implement', d: 'Execute the agreed HR services and establish structured processes.' },
+  { n: '04', t: 'Support', d: 'Provide ongoing coordination, documentation and reporting.' },
 ];
 
 const industries = [
-  'Offices and corporate teams',
-  'Retail and multi-location businesses',
-  'Manufacturing and factory operations',
-  'Service-sector organisations',
-  'Growing small and medium businesses',
-  'Organisations engaging contract workforces',
+  { slug: 'corporate-offices', name: 'Corporate Offices', d: 'HR administration, payroll and employee records for office-based teams.' },
+  { slug: 'manufacturing-factories', name: 'Manufacturing & Factories', d: 'Registers, licences, workforce records and inspection documentation.' },
+  { slug: 'retail-hospitality', name: 'Retail & Hospitality', d: 'Multi-location payroll inputs and consistent documentation across branches.' },
+  { slug: 'healthcare-institutions', name: 'Healthcare & Institutions', d: 'Shift-based attendance, statutory records and employee lifecycle support.' },
+  { slug: 'it-ites', name: 'IT & ITES', d: 'Recruitment coordination, onboarding and fast-changing headcount support.' },
+  { slug: 'service-organisations', name: 'Service Organisations', d: 'Day-to-day HR operations and compliance coordination for service teams.' },
 ];
 
 const schema = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: site.name,
-    url: abs('/', Astro.site),
-  },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: abs('/', Astro.site) },
 ];
 ---
 
 <Base title={title} description={description} path="/" schema={schema}>
-  <!-- ===================== HERO ===================== -->
-  <section class="hero">
+  <!-- ========== 01 · HERO ========== -->
+  <section class="hero has-watermark">
+    <Watermark position="top-right" size={560} opacity={0.05} tone="light" drift />
     <div class="container hero__inner">
       <div class="hero__copy">
-        <p class="label">ANK HR Services</p>
-        <h1>Your One-Stop Partner for All HR Needs</h1>
-        <p class="lead hero__lead">
-          From hiring and onboarding to payroll, HR operations, statutory
-          compliance and workforce management, ANK HR Services brings essential
-          HR support together under one roof — so your business can focus on
-          what it does best.
+        <p class="label" data-reveal="up">ANK HR Services</p>
+        <h1 data-reveal="up" style="--reveal-delay:60ms">
+          Your One-Stop Partner for
+          <span class="hero__accent">All HR Services</span>
+        </h1>
+        <p class="lead hero__lead" data-reveal="up" style="--reveal-delay:140ms">
+          Simplifying HR operations, payroll management and statutory
+          compliance for businesses.
         </p>
-        <div class="btn-row">
-          <a class="btn btn--accent" href={href('/contact/')}>Request a Consultation</a>
-          <a class="btn btn--on-navy" href={href('/services/')}>Explore Our Services</a>
+        <div class="btn-row" data-reveal="up" style="--reveal-delay:220ms">
+          <a class="btn btn--accent" href={href('/services/')}>Explore Our Services</a>
+          <a class="btn btn--on-navy" href={href('/contact/')}>Request a Consultation</a>
         </div>
-        <ul class="hero__meta">
-          <li>Based in {site.locality}</li>
+        <ul class="hero__meta" data-reveal="up" style="--reveal-delay:300ms">
+          <li>{site.locality}, {site.region}</li>
           <li>Serving {site.serviceArea}</li>
           <li>Scope agreed per client</li>
         </ul>
       </div>
 
-      <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <p class="hero__panel-title" id="hero-panel-title">Where we support you</p>
-        <ul class="hero__index">
-          {
-            services.map((s) => (
-              <li>
-                <a href={href(`/services/${s.slug}/`)}>
-                  <span class="hero__index-num">{s.number}</span>
-                  <span class="hero__index-label">{s.title}</span>
-                  <span class="hero__index-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="hero__panel-foot">
-          Need help across more than one area? <a href={href('/contact/')}>Talk to us</a
-          > about a combined scope.
-        </p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- ===================== INTRO ===================== -->
-  <section class="section">
-    <div class="container">
-      <div class="split">
-        <div>
-          <p class="label">Our approach</p>
-          <h2>HR support that works around your business</h2>
-        </div>
-        <div class="prose">
-          <p class="lead">
-            Every organisation has different people, processes and compliance
-            requirements. ANK HR Services works with businesses to understand
-            their needs and coordinate practical support across key HR
-            activities.
-          </p>
-          <p>
-            Managing people-related processes takes time, coordination and
-            attention to detail. We support businesses with day-to-day HR
-            requirements, payroll management, documentation, recruitment and
-            compliance-related coordination. Whether you need help with one
-            function or several, we can discuss a scope that fits your
-            organisation.
-          </p>
-          <ul class="pillars">
-            <li><strong>Practical HR support</strong> for everyday operations</li>
-            <li><strong>Clear processes</strong> your team can follow</li>
-            <li><strong>Dependable service</strong> with agreed deliverables</li>
-          </ul>
+      <div class="hero__media" data-reveal="scale" style="--reveal-delay:160ms">
+        <Figure
+          src="/images/hero-hr-consulting.jpg"
+          alt="ANK HR Services consultants reviewing payroll and compliance documentation with a client team"
+          ratio="4 / 3.4"
+          eager
+          label="Hero photograph — HR consultants in a client meeting"
+        />
+        <div class="hero__badge">
+          <span class="hero__badge-num">8</span>
+          <span class="hero__badge-text">HR service areas<br />under one roof</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== SERVICES ===================== -->
-  <section class="section section--grey" id="services">
+  <!-- ========== 02 · ABOUT ========== -->
+  <section class="section has-watermark" id="about">
+    <Watermark position="bottom-left" size={430} opacity={0.04} tone="navy" />
     <div class="container">
-      <div class="section-head">
+      <div class="about">
+        <div class="about__media" data-reveal="left">
+          <Figure
+            src="/images/about-ank.jpg"
+            alt="An ANK HR Services consultant discussing workforce planning with a business owner"
+            ratio="4 / 4.4"
+            label="About photograph — HR consultant with a client"
+          />
+        </div>
+
+        <div class="about__copy" data-reveal="right">
+          <p class="label">About ANK</p>
+          <h2>A professional HR consulting and services organisation</h2>
+          <div class="prose">
+            <p class="lead">
+              ANK HR Services is committed to providing comprehensive HR
+              solutions to businesses.
+            </p>
+            <p>
+              We specialise in payroll management, statutory compliance, HR
+              operations, recruitment, workforce management and labour law
+              support. Our objective is to simplify complex HR processes
+              through practical solutions, structured documentation and
+              dependable professional support.
+            </p>
+          </div>
+
+          <div class="mv" data-stagger>
+            <article class="mv__card" data-reveal="up">
+              <p class="mv__label">Our Mission</p>
+              <p class="mv__text">
+                To simplify HR management and statutory compliance through
+                reliable, efficient and practical HR solutions.
+              </p>
+            </article>
+            <article class="mv__card" data-reveal="up">
+              <p class="mv__label">Our Vision</p>
+              <p class="mv__text">
+                To become a trusted one-stop destination for comprehensive HR
+                services and business workforce solutions.
+              </p>
+            </article>
+          </div>
+
+          <a class="arrow-link" href={href('/about/')}>More about ANK HR Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 03 · SERVICES ========== -->
+  <section class="section section--grey has-watermark" id="services">
+    <Watermark position="top-right" size={480} opacity={0.045} tone="navy" />
+    <div class="container">
+      <div class="section-head" data-reveal="up">
         <div>
-          <p class="label">What we do</p>
-          <h2>Seven areas of HR support</h2>
+          <p class="label">Our Services</p>
+          <h2>Eight HR service areas, one partner</h2>
         </div>
         <p class="section-head__text">
           Each service can be taken on its own or combined into a single scope.
-          Exact deliverables are agreed based on your organisation, workforce
-          and applicable requirements.
+          Deliverables are agreed based on your organisation, workforce and the
+          requirements that apply to you.
         </p>
       </div>
 
-      <div class="card-grid">
+      <div class="svc-grid" data-stagger>
         {
           services.map((s) => (
-            <a class="card" href={href(`/services/${s.slug}/`)}>
-              <span class="card__num">{s.number}</span>
-              <span class="card__title">{s.title}</span>
-              <span class="card__text">{s.summary}</span>
-              <span class="card__more">Read more</span>
+            <a class="svc lift" href={href(`/services/${s.slug}/`)} data-reveal="up">
+              <Figure src={s.image} alt={`${s.title} — ANK HR Services`} ratio="16 / 10" label={s.title} />
+              <span class="svc__body">
+                <span class="svc__num">Service {s.number}</span>
+                <span class="svc__title">{s.title}</span>
+                <span class="svc__text">{s.summary}</span>
+                <span class="svc__more">Learn More</span>
+              </span>
             </a>
           ))
         }
-        <div class="card card--cta">
-          <span class="card__num">—</span>
-          <span class="card__title">Not sure where to start?</span>
-          <span class="card__text">
-            Describe your situation and we’ll suggest which areas of support are
-            relevant before you commit to anything.
-          </span>
-          <a class="arrow-link" href={href('/contact/')}>Discuss your requirements</a>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== HOW IT WORKS ===================== -->
-  <section class="section">
+  <!-- ========== 04 · WHY CHOOSE ANK ========== -->
+  <section class="section section--navy has-watermark" id="why">
+    <Watermark position="center" size={620} opacity={0.045} tone="light" drift />
     <div class="container">
-      <p class="label">How it works</p>
-      <h2 class="steps-head">From first conversation to ongoing coordination</h2>
-      <ol class="steps">
+      <div class="section-head" data-reveal="up">
+        <div>
+          <p class="label">Why Choose ANK</p>
+          <h2>Built for businesses that need HR to simply work</h2>
+        </div>
+        <p class="section-head__text section-head__text--light">
+          We focus on the parts of HR that quietly consume the most time —
+          accurate payroll, organised records and compliance documentation that
+          is ready before it is asked for.
+        </p>
+      </div>
+
+      <div class="why-grid" data-stagger>
         {
-          steps.map((s) => (
-            <li class="step">
+          whyPoints.map((p) => (
+            <article class="why" data-reveal="up">
+              <span class="why__num">{p.n}</span>
+              <h3 class="why__title">{p.t}</h3>
+              <p class="why__text">{p.d}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 05 · INDUSTRIES ========== -->
+  <section class="section has-watermark" id="industries">
+    <Watermark position="bottom-right" size={420} opacity={0.04} tone="navy" />
+    <div class="container">
+      <div class="section-head" data-reveal="up">
+        <div>
+          <p class="label">Industries We Serve</p>
+          <h2>HR support across different business environments</h2>
+        </div>
+        <p class="section-head__text">
+          Every workforce is organised differently. We can discuss support
+          across a range of organisation types, depending on the services
+          needed and the scope agreed.
+        </p>
+      </div>
+
+      <div class="ind-grid" data-stagger>
+        {
+          industries.map((i) => (
+            <article class="ind-card lift" data-reveal="up">
+              <Figure
+                src={`/images/industries/${i.slug}.jpg`}
+                alt={`${i.name} — HR, payroll and compliance support from ANK HR Services`}
+                ratio="3 / 2"
+                label={i.name}
+              />
+              <div class="ind-card__body">
+                <h3 class="ind-card__title">{i.name}</h3>
+                <p class="ind-card__text">{i.d}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="ind-foot" data-reveal="up">
+        <a class="arrow-link" href={href('/industries/')}>See how we work with each</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== 06 · WORKING APPROACH ========== -->
+  <section class="section section--grey has-watermark" id="approach">
+    <Watermark position="top-left" size={400} opacity={0.04} tone="navy" />
+    <div class="container">
+      <div class="section-head" data-reveal="up">
+        <div>
+          <p class="label">Our Working Approach</p>
+          <h2>From first conversation to ongoing support</h2>
+        </div>
+      </div>
+
+      <ol class="steps" data-stagger>
+        {
+          approach.map((s) => (
+            <li class="step" data-reveal="up">
               <span class="step__num">{s.n}</span>
               <h3 class="step__title">{s.t}</h3>
               <p class="step__text">{s.d}</p>
@@ -214,122 +267,105 @@ const schema = [
     </div>
   </section>
 
-  <!-- ===================== WHY ANK ===================== -->
-  <section class="section section--navy">
+  <!-- ========== 07 · CONTACT ========== -->
+  <section class="section contact-section has-watermark" id="contact">
+    <Watermark position="top-right" size={500} opacity={0.04} tone="navy" />
     <div class="container">
-      <div class="split split--sticky">
+      <div class="section-head" data-reveal="up">
         <div>
-          <p class="label">Why ANK</p>
-          <h2>A practical partner for HR and payroll processes</h2>
-          <p class="lead" style="margin-top:1.25rem;">
-            We focus on clear workflows, careful documentation and reliable
-            coordination — the parts of HR that quietly take up the most time.
-          </p>
-          <div class="btn-row">
-            <a class="btn btn--on-navy" href={href('/why-ank/')}>More about our approach</a>
-          </div>
-          <p class="why-contact">
-            Based in {site.locality} · Serving {site.serviceArea}<br />
-            Call <a href={telLink}>{site.phoneDisplay}</a> — {`${site.hoursNote}, ${site.hours}`}
-          </p>
-        </div>
-        <ul class="why-list">
-          {
-            whyPoints.map((p) => (
-              <li>
-                <h3>{p.t}</h3>
-                <p>{p.d}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== INDUSTRIES ===================== -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="label">Industries</p>
-          <h2>HR support for different business environments</h2>
+          <p class="label">Contact ANK HR Services</p>
+          <h2>Let’s discuss your HR requirements</h2>
         </div>
         <p class="section-head__text">
-          Every business has its own workforce and operating requirements. We
-          can discuss support across a range of organisation types, depending on
-          the services needed and the agreed scope.
+          Tell us about your organisation and the support you are looking for.
+          We’ll review your enquiry and come back to you on scope and next
+          steps.
         </p>
       </div>
-      <ul class="industry-row">
-        {industries.map((i) => <li>{i}</li>)}
-      </ul>
-      <p class="industry-foot">
-        <a class="arrow-link" href={href('/industries/')}>See how we work with each</a>
-      </p>
+
+      <div class="contact-grid">
+        <div class="contact-grid__aside" data-reveal="left">
+          <ul class="contact-methods">
+            <li>
+              <span class="contact-methods__label">Call</span>
+              <a class="contact-methods__value" href={telLink}>{site.phoneDisplay}</a>
+            </li>
+            <li>
+              <span class="contact-methods__label">WhatsApp</span>
+              <a class="contact-methods__value" href={whatsappLink} rel="noopener">
+                Message us
+              </a>
+            </li>
+            <li>
+              <span class="contact-methods__label">Email</span>
+              <a class="contact-methods__value" href={mailLink}>{site.email}</a>
+            </li>
+            <li>
+              <span class="contact-methods__label">Office</span>
+              <span class="contact-methods__value">{site.addressLine}</span>
+            </li>
+            <li>
+              <span class="contact-methods__label">Hours</span>
+              <span class="contact-methods__value">{site.hoursNote}, {site.hours}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-grid__form" data-reveal="right">
+          <EnquiryForm />
+        </div>
+      </div>
     </div>
   </section>
-
-  <CtaBand
-    title="Bring your HR requirements together"
-    text="Looking for support across payroll, recruitment, HR operations, documentation or compliance coordination? Talk to ANK HR Services about your requirements."
-    primaryLabel="Discuss Your HR Needs"
-  />
 </Base>
 
 <style>
-  /* --- Hero ------------------------------------------------------------- */
+  /* ---------- 01 Hero ---------- */
   .hero {
     background: var(--navy);
     color: var(--on-navy-muted);
-    padding-block: clamp(3rem, 7vw, 6rem);
-    position: relative;
-    overflow: hidden;
+    padding-block: clamp(3rem, 7vw, 6.5rem);
   }
 
-  /* Restrained brand detail: a faint grid, no gradients or glow. */
   .hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.045) 1px,
-        transparent 1px
-      ),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 72px 72px;
-    mask-image: radial-gradient(
-      120% 90% at 85% 0%,
-      #000 0%,
-      transparent 70%
-    );
+    mask-image: radial-gradient(120% 90% at 85% 0%, #000 0%, transparent 70%);
     pointer-events: none;
+    z-index: 0;
   }
 
   .hero__inner {
-    position: relative;
-    z-index: 1;
     display: grid;
-    gap: clamp(2.5rem, 5vw, 4.5rem);
+    gap: clamp(2.5rem, 5vw, 4rem);
     align-items: center;
   }
 
   @media (min-width: 980px) {
     .hero__inner {
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      grid-template-columns: 1fr 1fr; /* brief section 4: 50 / 50 */
     }
   }
 
   .hero h1 {
     color: #fff;
-    max-width: 14ch;
+    max-width: 15ch;
+  }
+
+  .hero__accent {
+    display: block;
+    color: var(--green);
   }
 
   .hero__lead {
     margin-top: 1.5rem;
-    max-width: 54ch;
+    max-width: 46ch;
     color: #c7d4e6;
+    font-size: clamp(1.0625rem, 1rem + 0.5vw, 1.3125rem);
   }
 
   .hero__meta {
@@ -343,7 +379,7 @@ const schema = [
     font-size: 0.8125rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #7d92b4;
+    color: #8aa1c2;
   }
 
   .hero__meta li {
@@ -360,89 +396,57 @@ const schema = [
     flex: none;
   }
 
-  /* --- Hero service index ---------------------------------------------- */
-  .hero__panel {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--on-navy-line);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  .hero__media {
+    position: relative;
   }
 
-  .hero__panel-title {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #8aa1c2;
-    margin-bottom: 0.85rem;
-  }
-
-  .hero__index {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .hero__index li + li {
-    border-top: 1px solid var(--on-navy-line);
-  }
-
-  .hero__index a {
-    display: grid;
-    grid-template-columns: 2.1rem 1fr auto;
-    align-items: baseline;
-    gap: 0.5rem;
-    padding: 0.7rem 0.5rem;
-    color: #e4ebf5;
-    text-decoration: none;
-    border-radius: var(--radius);
-    transition: background-color 0.16s ease;
-  }
-
-  .hero__index a:hover {
-    background: rgba(255, 255, 255, 0.07);
+  .hero__badge {
+    position: absolute;
+    z-index: 2;
+    left: clamp(-1rem, -2vw, -2rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.35rem;
+    /* A deepened brand orange: the badge text is small and bold, so the
+       lighter #FF5400 would not clear AA contrast against white. */
+    background: #d14500;
     color: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.7);
   }
 
-  .hero__index-num {
+  .hero__badge-num {
     font-family: var(--serif);
-    font-size: 0.75rem;
-    color: var(--green);
+    font-size: 2.1rem;
+    font-weight: 600;
+    line-height: 1;
   }
 
-  .hero__index-label {
-    font-size: 0.9375rem;
+  .hero__badge-text {
+    font-size: 0.8125rem;
+    font-weight: 600;
     line-height: 1.35;
   }
 
-  .hero__index-arrow {
-    color: #6f86a8;
-    font-size: 0.875rem;
-    transition: transform 0.16s ease, color 0.16s ease;
+  @media (max-width: 520px) {
+    .hero__badge {
+      left: auto;
+      right: 0.75rem;
+      bottom: 0.75rem;
+      padding: 0.75rem 1rem;
+    }
+    .hero__badge-num {
+      font-size: 1.6rem;
+    }
   }
 
-  .hero__index a:hover .hero__index-arrow {
-    color: var(--green);
-    transform: translateX(2px);
-  }
-
-  .hero__panel-foot {
-    margin-top: 1.1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--on-navy-line);
-    font-size: 0.8125rem;
-    color: #8aa1c2;
-  }
-
-  .hero__panel-foot a {
-    color: #fff;
-  }
-
-  /* --- Section head ----------------------------------------------------- */
+  /* ---------- Shared section head ---------- */
   .section-head {
     display: grid;
     gap: 1.25rem 3rem;
-    margin-bottom: clamp(2rem, 4vw, 3rem);
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
     align-items: end;
   }
 
@@ -457,77 +461,248 @@ const schema = [
     max-width: 54ch;
   }
 
-  /* --- Intro pillars ---------------------------------------------------- */
-  .pillars {
-    list-style: none;
-    padding: 0;
-    margin-top: 1.75rem !important;
+  .section-head__text--light {
+    color: var(--on-navy-muted);
+  }
+
+  /* ---------- 02 About ---------- */
+  .about {
     display: grid;
-    gap: 0;
-    border-top: 1px solid var(--line);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
   }
 
-  .pillars li {
-    padding: 0.85rem 0;
-    border-bottom: 1px solid var(--line);
-    font-size: 0.9375rem;
-  }
-
-  /* --- Cards ------------------------------------------------------------ */
-  /* 7 services + 1 CTA card. Explicit column counts keep the last row full:
-     at 3 columns the CTA spans two cells, at 2 columns 8 items divide evenly. */
-  @media (min-width: 1000px) {
-    .card-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .card--cta {
-      grid-column: span 2;
+  @media (min-width: 940px) {
+    .about {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     }
   }
 
-  @media (min-width: 640px) and (max-width: 999px) {
-    .card-grid {
+  .about__copy .prose {
+    margin-top: 1.35rem;
+  }
+
+  .mv {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 2rem 0 1.75rem;
+  }
+
+  @media (min-width: 620px) {
+    .mv {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .mv__card {
+    background: #fff;
+    padding: 1.5rem;
+  }
+
+  .mv__label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-ink);
+    margin-bottom: 0.65rem;
+  }
+
+  .mv__text {
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: var(--navy);
+  }
+
+  /* ---------- 03 Services ---------- */
+  .svc-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Brief section 6: 4 per row desktop, 2 tablet, 1 mobile. */
+  @media (min-width: 620px) {
+    .svc-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 639px) {
-    .card-grid {
-      grid-template-columns: minmax(0, 1fr);
+  @media (min-width: 1100px) {
+    .svc-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
-  .card--cta {
+  .svc {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  .svc :global(.figure) {
+    border-radius: 0;
+  }
+
+  .svc__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.35rem;
+    flex: 1;
+  }
+
+  .svc__num {
+    font-family: var(--serif);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--green-ink);
+  }
+
+  .svc__title {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.3;
+    color: var(--navy);
+  }
+
+  .svc__text {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    flex: 1;
+  }
+
+  .svc__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .svc__more::after {
+    content: '→';
+    transition: transform 0.18s ease;
+  }
+
+  .svc:hover .svc__more::after {
+    transform: translateX(3px);
+  }
+
+  .svc:hover {
+    border-color: var(--line-strong);
+  }
+
+  /* ---------- 04 Why ---------- */
+  .why-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--on-navy-line);
+    border: 1px solid var(--on-navy-line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 680px) {
+    .why-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .why-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .why {
     background: var(--navy);
+    padding: clamp(1.5rem, 2.5vw, 2rem);
   }
 
-  .card--cta .card__text {
-    max-width: 52ch;
-  }
-
-  .card--cta .card__num {
+  .why__num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     color: var(--green);
+    margin-bottom: 0.85rem;
   }
 
-  .card--cta .card__title {
-    color: #fff;
+  .why__title {
+    font-size: 1.0625rem;
+    margin-bottom: 0.5rem;
   }
 
-  .card--cta .card__text {
+  .why__text {
+    font-size: 0.9375rem;
     color: var(--on-navy-muted);
   }
 
-  .card--cta .arrow-link {
-    color: #fff;
-    margin-top: 0.35rem;
+  /* ---------- 05 Industries ---------- */
+  .ind-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  /* --- Steps ------------------------------------------------------------ */
-  .steps-head {
-    max-width: 22ch;
-    margin-bottom: clamp(2rem, 4vw, 3rem);
+  @media (min-width: 620px) {
+    .ind-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
+  @media (min-width: 980px) {
+    .ind-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .ind-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .ind-card :global(.figure) {
+    border-radius: 0;
+  }
+
+  .ind-card__body {
+    padding: 1.35rem;
+  }
+
+  .ind-card__title {
+    font-size: 1.0625rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .ind-card__text {
+    font-size: 0.875rem;
+    color: var(--ink-2);
+  }
+
+  .ind-foot {
+    margin-top: 2rem;
+  }
+
+  /* ---------- 06 Approach ---------- */
   .steps {
     list-style: none;
     margin: 0;
@@ -553,7 +728,7 @@ const schema = [
   }
 
   .step__title {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     margin-bottom: 0.5rem;
   }
 
@@ -562,89 +737,59 @@ const schema = [
     color: var(--ink-2);
   }
 
-  /* --- Why list --------------------------------------------------------- */
-  .why-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .why-list li {
-    padding: 1.35rem 0;
-    border-top: 1px solid var(--on-navy-line);
-  }
-
-  .why-list li:last-child {
-    border-bottom: 1px solid var(--on-navy-line);
-  }
-
-  .why-list h3 {
-    font-size: 1.0625rem;
-    margin-bottom: 0.35rem;
-  }
-
-  .why-list p {
-    font-size: 0.9375rem;
-    color: var(--on-navy-muted);
-    max-width: 58ch;
-  }
-
-  .why-contact {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--on-navy-line);
-    font-size: 0.875rem;
-    line-height: 1.8;
-    color: #7d92b4;
-  }
-
-  .why-contact a {
-    color: #fff;
-    font-weight: 600;
-  }
-
-  /* --- Industries ------------------------------------------------------- */
-  .industry-row {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* ---------- 07 Contact ---------- */
+  .contact-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.75rem, 3.5vw, 3rem);
+    align-items: start;
+  }
+
+  @media (min-width: 1000px) {
+    .contact-grid {
+      grid-template-columns: 19rem minmax(0, 1fr);
+    }
+  }
+
+  .contact-methods {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .contact-methods li {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.95rem 1.25rem;
     border-top: 1px solid var(--line);
   }
 
-  @media (min-width: 560px) {
-    .industry-row {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .contact-methods li:first-child {
+    border-top: 0;
   }
 
-  @media (min-width: 900px) {
-    .industry-row {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+  .contact-methods__label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
 
-  .industry-row li {
-    padding: 1rem 1.25rem 1rem 0;
-    border-bottom: 1px solid var(--line);
+  .contact-methods__value {
     font-size: 0.9375rem;
-    color: var(--ink-2);
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
+    font-weight: 500;
+    color: var(--navy);
+    word-break: break-word;
   }
 
-  .industry-row li::before {
-    content: '';
-    width: 0.4rem;
-    height: 0.4rem;
-    border: 1.5px solid var(--green);
-    flex: none;
-    transform: translateY(-1px);
+  a.contact-methods__value {
+    text-decoration: none;
   }
 
-  .industry-foot {
-    margin-top: 1.75rem;
+  a.contact-methods__value:hover {
+    text-decoration: underline;
   }
 </style>

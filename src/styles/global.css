@@ -18,7 +18,14 @@
   --orange: #ff5400;
   --orange-700: #c23f00;
   --white: #ffffff;
-  --grey: #f4f6f8;
+  --grey: #f5f7fa;
+
+  /* Brief section 14 asks for these names — aliases, same values. */
+  --ank-navy: var(--navy);
+  --ank-green: var(--green);
+  --ank-orange: var(--orange);
+  --ank-white: var(--white);
+  --ank-light: var(--grey);
 
   /* Neutrals */
   --ink: #16202e;
@@ -546,4 +553,95 @@ hr.rule {
   border: 0;
   border-top: 1px solid var(--line);
   margin-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+
+/* ===========================================================================
+   MOTION — brief section 13
+   Entrance animations are opt-in per element via `data-reveal`.
+
+   The hidden state is applied only when BOTH JavaScript has run AND the
+   visitor has not asked for reduced motion. Without JS, or with reduced
+   motion, everything is simply visible — content never depends on animation.
+   =========================================================================== */
+
+.js-reveal [data-reveal] {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.js-reveal [data-reveal='up'],
+.js-reveal [data-reveal=''] {
+  transform: translate3d(0, 1.25rem, 0);
+}
+
+.js-reveal [data-reveal='left'] {
+  transform: translate3d(-1.5rem, 0, 0);
+}
+
+.js-reveal [data-reveal='right'] {
+  transform: translate3d(1.5rem, 0, 0);
+}
+
+.js-reveal [data-reveal='scale'] {
+  transform: scale(0.97);
+}
+
+.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.8, 0.3, 1),
+    transform 0.7s cubic-bezier(0.22, 0.8, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: auto;
+}
+
+/* Stagger helper: children animate in sequence. */
+[data-stagger] > * {
+  --reveal-delay: calc(var(--i, 0) * 70ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal].is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- Sections that host a watermark -------------------------------------- */
+.has-watermark {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* All foreground content sits above the watermark (brief section 14). */
+.has-watermark > .container,
+.has-watermark > *:not(.watermark) {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Card hover lift ----------------------------------------------------- */
+@media (hover: hover) {
+  .lift {
+    transition:
+      transform 0.25s cubic-bezier(0.22, 0.8, 0.3, 1),
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -24px rgba(8, 36, 79, 0.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift:hover {
+    transform: none;
+  }
 }

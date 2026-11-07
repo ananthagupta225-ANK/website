@@ -13,17 +13,31 @@ export const site = {
   description:
     'ANK HR Services supports businesses in Telangana and Andhra Pradesh with HR operations, payroll management, employee documentation, recruitment coordination and applicable statutory compliance support.',
 
-  /* Logo ---------------------------------------------------------------
-     The brief requires the ORIGINAL ANK logo artwork, unaltered. No logo
-     file was supplied, so the header currently renders a plain typographic
-     wordmark. To switch to the real logo:
-       1. Save the supplied file as  public/images/ank-logo.svg
-          (SVG preferred; transparent PNG also works — update the extension)
-       2. Set  logo  below to  '/images/ank-logo.svg'
-     Do not redraw or recreate the logo. ------------------------------- */
-  logo: '' as string,
-  logoWidth: 168,
-  logoHeight: 44,
+  /* Brand assets -------------------------------------------------------
+     The redesign brief requires the ORIGINAL approved ANK artwork, used
+     unaltered. Nothing here is recreated, approximated or redrawn.
+
+     Both files below were produced from the supplied artwork
+     "HR Final (1).png" by removing the white background and cropping —
+     nothing was redrawn, recoloured or reproportioned.
+
+     1. FULL LOGO — header and footer. The complete lockup: circular mark,
+        ANK wordmark, "HR Services" and the "Growing Together Beyond
+        Limits" tagline, at its original 2.924:1 proportions.
+
+     2. CIRCULAR MARK — the three-person circle on its own, padded square,
+        used for the background watermark and every app icon.
+
+     If a vector (SVG/AI/EPS) original exists it is worth swapping in: it
+     would stay crisp at any size and shrink the page weight. A reversed
+     (white) version of the logo would also help — the lockup's navy
+     elements have little contrast on the dark footer, which is currently
+     handled by placing it on a white panel.
+     ------------------------------------------------------------------ */
+  logo: '/images/ank-logo.png',
+  logoWidth: 180,
+  logoHeight: 62, // the supplied lockup is 2.924:1 — keep this ratio
+  circleMark: '/images/ank-circle-mark.png',
 
   /* Contact ------------------------------------------------------------ */
   phone: '+919700369225',
@@ -32,12 +46,12 @@ export const site = {
   whatsappMessage:
     "Hello ANK HR Services, I'd like to discuss my organisation's HR requirements.",
 
-  // ⚠ CONFIRM — the brief lists the business email as "[ANK to provide]".
-  // Replace the placeholder below with the official address, then remove
-  // the `emailIsPlaceholder` flag. While the flag is true the email is
-  // hidden from the website so no incorrect address is published.
-  email: 'info@ankhrservices.com',
-  emailIsPlaceholder: true,
+  // Supplied in the redesign brief (section 10).
+  // ⚠ NOTE the domain is ankservices.com, NOT ankhrservices.com — please
+  // double-check this is right before launch, since a wrong address means
+  // enquiries bounce silently.
+  email: 'ananthagupta@ankservices.com',
+  emailIsPlaceholder: false,
 
   addressLine: 'Hyderabad, Telangana, India', // ⚠ CONFIRM full street address
   locality: 'Hyderabad',
@@ -63,11 +77,11 @@ export const site = {
 };
 
 export const nav = [
-  { label: 'About', href: '/about/' },
-  { label: 'Services', href: '/services/' },
+  { label: 'About Us', href: '/about/' },
+  { label: 'Our Services', href: '/services/' },
   { label: 'Industries', href: '/industries/' },
   { label: 'Why ANK', href: '/why-ank/' },
-  { label: 'Contact', href: '/contact/' },
+  { label: 'Contact Us', href: '/contact/' },
 ];
 
 export const whatsappLink = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(

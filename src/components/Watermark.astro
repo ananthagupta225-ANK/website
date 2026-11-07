@@ -1,0 +1,150 @@
+---
+/* Oversized circular brand mark used as a faint background watermark.
+
+   The circle MUST be the one extracted from the approved ANK logo — see
+   `circleMark` in src/data/site.ts. Nothing is substituted or redrawn here:
+   if the file is not present yet, this component renders nothing at all and
+   the section simply appears without a watermark. */
+import { site } from '../data/site';
+import { hasAsset } from '../lib/assets';
+import { href } from '../lib/url';
+
+interface Props {
+  /** Corner to anchor to. */
+  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
+  /** Desktop diameter in px. Scales down automatically on small screens. */
+  size?: number;
+  /** 0–1. The brief asks for roughly 0.03–0.05. */
+  opacity?: number;
+  /** 'brand' keeps the original colours; 'navy' tints it for light sections. */
+  tone?: 'brand' | 'navy' | 'light';
+  /** Drift gently on scroll where motion is allowed. */
+  drift?: boolean;
+}
+
+const {
+  position = 'top-right',
+  size = 450,
+  opacity = 0.04,
+  tone = 'brand',
+  drift = false,
+} = Astro.props;
+
+const present = hasAsset(site.circleMark);
+---
+
+{
+  present && (
+    <span
+      class="watermark"
+      data-position={position}
+      data-tone={tone}
+      data-drift={drift ? '' : undefined}
+      style={`--wm-size:${size}px; --wm-opacity:${opacity};`}
+      aria-hidden="true"
+      role="presentation"
+    >
+      <img src={href(site.circleMark)} alt="" width={size} height={size} loading="lazy" decoding="async" />
+    </span>
+  )
+}
+
+<style>
+  .watermark {
+    position: absolute;
+    width: var(--wm-size);
+    height: var(--wm-size);
+    max-width: 120vw;
+    opacity: var(--wm-opacity);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    display: block;
+  }
+
+  .watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Tints for light and dark sections. The mark keeps its own colours under
+     'brand'; the others flatten it so faint artwork stays legible. */
+  .watermark[data-tone='navy'] img {
+    filter: grayscale(1) brightness(0) saturate(100%) invert(11%) sepia(47%)
+      saturate(2200%) hue-rotate(201deg) brightness(95%) contrast(97%);
+  }
+
+  .watermark[data-tone='light'] img {
+    filter: brightness(0) invert(1);
+  }
+
+  .watermark[data-position='top-right'] {
+    top: calc(var(--wm-size) * -0.28);
+    right: calc(var(--wm-size) * -0.18);
+  }
+
+  .watermark[data-position='top-left'] {
+    top: calc(var(--wm-size) * -0.28);
+    left: calc(var(--wm-size) * -0.18);
+  }
+
+  .watermark[data-position='bottom-right'] {
+    bottom: calc(var(--wm-size) * -0.3);
+    right: calc(var(--wm-size) * -0.2);
+  }
+
+  .watermark[data-position='bottom-left'] {
+    bottom: calc(var(--wm-size) * -0.3);
+    left: calc(var(--wm-size) * -0.2);
+  }
+
+  .watermark[data-position='center'] {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Brief section 13: gentle movement, never distracting. */
+  .watermark[data-drift] {
+    animation: wm-drift 28s ease-in-out infinite alternate;
+  }
+
+  @keyframes wm-drift {
+    from {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    to {
+      transform: translate3d(0, -1.5rem, 0) rotate(8deg);
+    }
+  }
+
+  .watermark[data-position='center'][data-drift] {
+    animation: wm-drift-center 28s ease-in-out infinite alternate;
+  }
+
+  @keyframes wm-drift-center {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, calc(-50% - 1.5rem)) rotate(8deg);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .watermark {
+      /* Brief: 200–300px on mobile. */
+      width: min(var(--wm-size), 260px);
+      height: min(var(--wm-size), 260px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .watermark[data-drift],
+    .watermark[data-position='center'][data-drift] {
+      animation: none;
+    }
+  }
+</style>

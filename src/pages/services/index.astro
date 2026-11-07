@@ -2,12 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import Watermark from '../../components/Watermark.astro';
+import Figure from '../../components/Figure.astro';
 import { services } from '../../data/services';
 import { href, abs } from '../../lib/url';
 
 const title = 'HR, Payroll & Compliance Services | ANK HR Services';
 const description =
-  'Seven areas of HR support from ANK HR Services: payroll, PF and ESI, HR operations, policies, recruitment, factory compliance and contract labour coordination.';
+  'Eight HR service areas from ANK HR Services: payroll, PF and ESI, HR operations, policies, recruitment, factory compliance, contract labour and scrutiny cases.';
 
 const schema = [
   {
@@ -26,55 +28,60 @@ const schema = [
 
 <Base title={title} description={description} schema={schema}>
   <PageHero
-    label="Services"
-    title="HR, payroll and compliance support"
-    lead="Explore the HR, payroll, recruitment, documentation and compliance-related support offered by ANK HR Services. The exact scope can be discussed based on your organisation, workforce, locations and applicable requirements."
-    breadcrumbs={[{ label: 'Services' }]}
+    label="Our Services"
+    title="Eight HR service areas, one partner"
+    lead="Explore the HR, payroll, recruitment, documentation and compliance support offered by ANK HR Services. The exact scope is discussed based on your organisation, workforce, locations and applicable requirements."
+    breadcrumbs={[{ label: 'Our Services' }]}
   />
 
-  <section class="section">
+  <section class="section has-watermark">
+    <Watermark position="top-right" size={480} opacity={0.04} tone="navy" />
     <div class="container">
-      <ol class="service-list">
+      <ol class="svc-list">
         {
-          services.map((s) => (
-            <li class="service-row">
-              <div class="service-row__head">
-                <span class="service-row__num">{s.number}</span>
-                <h2 class="service-row__title">
-                  <a href={href(`/services/${s.slug}/`)}>{s.title}</a>
-                </h2>
-                <p class="service-row__lead">{s.lead}</p>
-                <a class="arrow-link" href={href(`/services/${s.slug}/`)}>
-                  View service details
+          services.map((s, idx) => (
+            <li class="svc-row" data-reveal={idx % 2 === 0 ? 'left' : 'right'}>
+              <div class="svc-row__media">
+                <a href={href(`/services/${s.slug}/`)} aria-label={s.title}>
+                  <Figure
+                    src={s.image}
+                    alt={`${s.title} — ANK HR Services`}
+                    ratio="3 / 2"
+                    label={s.title}
+                  />
                 </a>
               </div>
-              <div class="service-row__body">
-                <p class="service-row__label">What is typically included</p>
-                <ul class="ticks">
-                  {s.activities.slice(0, 5).map((a) => (
+
+              <div class="svc-row__body">
+                <span class="svc-row__num">Service {s.number}</span>
+                <h2 class="svc-row__title">
+                  <a href={href(`/services/${s.slug}/`)}>{s.title}</a>
+                </h2>
+                <p class="svc-row__lead">{s.summary}</p>
+
+                <p class="svc-row__label">What is typically included</p>
+                <ul class="ticks ticks--two">
+                  {s.activities.slice(0, 4).map((a) => (
                     <li>{a}</li>
                   ))}
                 </ul>
-                {s.activities.length > 5 && (
-                  <p class="service-row__more">
-                    + {s.activities.length - 5} further{' '}
-                    {s.activities.length - 5 === 1 ? 'activity' : 'activities'} —{' '}
-                    <a href={href(`/services/${s.slug}/`)}>see the full list</a>
-                  </p>
-                )}
+
+                <a class="arrow-link svc-row__cta" href={href(`/services/${s.slug}/`)}>
+                  Learn More about {s.short}
+                </a>
               </div>
             </li>
           ))
         }
       </ol>
 
-      <div class="scope-note scope-note--page">
+      <div class="scope-note--page" data-reveal="up">
         <h2>A note on scope</h2>
         <p>
           Service availability and deliverables are confirmed individually with
           each client. Requirements vary by establishment, location, workforce
           and the law in force at the time, so the activities listed here
-          describe the support we can coordinate rather than a fixed package.
+          describe the support we can provide rather than a fixed package.
           Responsibilities, approvals, exclusions and commercials are set out in
           the engagement before work begins.
         </p>
@@ -86,85 +93,85 @@ const schema = [
 </Base>
 
 <style>
-  .service-list {
+  .svc-list {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .service-row {
+  .svc-row {
     display: grid;
-    gap: 1.75rem 3.5rem;
-    padding-block: clamp(2.25rem, 4vw, 3.25rem);
+    gap: 1.5rem 3rem;
+    padding-block: clamp(2rem, 4vw, 3rem);
     border-top: 1px solid var(--line);
+    align-items: start;
   }
 
-  .service-row:first-child {
+  .svc-row:first-child {
     border-top: 0;
     padding-top: 0;
   }
 
   @media (min-width: 900px) {
-    .service-row {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    .svc-row {
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    }
+    .svc-row:nth-child(even) .svc-row__media {
+      order: 2;
     }
   }
 
-  .service-row__num {
+  .svc-row__media a {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .svc-row__num {
     display: block;
     font-family: var(--serif);
     font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     color: var(--green-ink);
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.6rem;
   }
 
-  .service-row__title {
+  .svc-row__title {
     font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.75rem;
   }
 
-  .service-row__title a {
+  .svc-row__title a {
     text-decoration: none;
   }
 
-  .service-row__title a:hover {
+  .svc-row__title a:hover {
     text-decoration: underline;
   }
 
-  .service-row__lead {
+  .svc-row__lead {
     color: var(--ink-2);
-    max-width: 50ch;
-    margin-bottom: 1.25rem;
+    max-width: 62ch;
+    margin-bottom: 1.5rem;
   }
 
-  .service-row__body {
-    background: var(--grey);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.25rem, 2.5vw, 1.75rem);
-  }
-
-  .service-row__label {
+  .svc-row__label {
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 1rem;
+    margin-bottom: 0.9rem;
   }
 
-  .service-row__body .ticks li {
+  .svc-row .ticks li {
     font-size: 0.9375rem;
+    color: var(--ink-2);
   }
 
-  .service-row__more {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--line-strong);
-    font-size: 0.875rem;
-    color: var(--muted);
+  .svc-row__cta {
+    margin-top: 1.5rem;
   }
 
   .scope-note--page {

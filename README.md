@@ -8,6 +8,7 @@ Built from the approved *Website Content & Developer Brief* and the
 *One-Stop HR Services Website Strategy* (both kept in `docs-source/`).
 
 **→ Setup, Google Sheets connection and deployment: [DEPLOYMENT.md](DEPLOYMENT.md)**
+**→ Artwork and photographs still needed: [ASSETS.md](ASSETS.md)**
 
 ---
 
@@ -45,17 +46,20 @@ src/
     site.ts              All company details — phone, email, hours, form URL
     services.ts          All seven services: copy, activities, FAQs, SEO text
   lib/url.ts             href() / abs() — base-path-aware link helpers
+  lib/assets.ts          Build-time check: is this image/logo actually present?
   layouts/Base.astro     <head>, metadata, JSON-LD, header + footer
   components/
-    Header.astro         Utility bar, nav, services dropdown, mobile menu
+    Header.astro         Utility bar, nav, services dropdown, WhatsApp, mobile menu
     Footer.astro
+    Watermark.astro      Oversized circular brand mark (needs the extracted file)
+    Figure.astro         Photo slot — real image, or a branded panel until one exists
     EnquiryForm.astro    Validation + submission to Google Sheets
     CtaBand.astro        Reusable closing call-to-action
     PageHero.astro       Inner-page heading with breadcrumbs
     Logo.astro           Supplied logo file, or a text wordmark fallback
   pages/
     index.astro          Home
-    about/ industries/ why-ank/ contact/ privacy-policy/
+    about/ industries/ why-ank/ contact/ privacy-policy/ terms/
     services/
       index.astro        Services listing
       [slug].astro       One page per service, generated from services.ts
@@ -79,13 +83,30 @@ docs-source/             The original Word briefs this site was built from
 confirmation are marked `// ⚠ CONFIRM`.
 
 ### Service pages
-`src/data/services.ts`. Each service is one object. Editing it updates the
-service page, the services listing, the homepage cards, the header dropdown,
-the footer, the contact form's checkboxes and the sitemap — all at once.
+`src/data/services.ts`. Each of the **eight** services is one object. Editing it
+updates the service page, the services listing, the homepage cards, the header
+dropdown, the footer, the contact form's checkboxes and the sitemap — all at
+once. Adding a ninth means adding one object. Nothing else needs touching.
 
-Adding an eighth service means adding one object to that array. Nothing else
-needs touching. Keep the scope-safe wording ("support", "coordination",
-"as applicable", "where agreed") — section 11 of the strategy brief requires it.
+Card descriptions follow the redesign brief's wording. The `scopeNote` and FAQ
+fields keep the protective language the original strategy brief requires — no
+guaranteed compliance, no guaranteed hiring or proceeding outcomes, no legal
+advice. Please keep those when editing.
+
+### Missing artwork and photographs
+Every logo and photo slot is checked at build time by `src/lib/assets.ts`. A
+file that exists is used; one that does not is replaced by a branded panel, so
+the page still looks finished. [ASSETS.md](ASSETS.md) lists every path.
+
+Nothing is invented: no logo was recreated, no circular mark approximated and
+no stock photograph embedded without the owner licensing it.
+
+### Motion
+Entrance animations are opt-in per element with `data-reveal="up|left|right|scale"`,
+and `data-stagger` on a parent sequences its children. The hidden state applies
+only when JavaScript has run **and** reduced motion is not requested — so with
+JS off, or with reduced motion on, everything is simply visible. Content never
+depends on animation.
 
 ### Page copy
 Each page's text lives in its own file under `src/pages/`.

@@ -14,6 +14,9 @@ export interface Service {
   number: string;
   title: string;
   short: string;
+  /** Photograph for the service card and page header. Drop the file at this
+      path in public/ and it appears; until then a branded panel is shown. */
+  image: string;
   metaTitle: string;
   metaDescription: string;
   summary: string;
@@ -32,11 +35,12 @@ export const services: Service[] = [
     number: '01',
     title: 'Payroll Management',
     short: 'Payroll',
+    image: '/images/services/payroll-management.jpg',
     metaTitle: 'Payroll Management Services | ANK HR Services',
     metaDescription:
       'Support for monthly payroll inputs, attendance data coordination, salary sheets, payroll reports and payroll record keeping. Scope agreed with each client.',
     summary:
-      'Support for organised payroll processing, salary data coordination, payroll reports and related employee records.',
+      'Salary processing, payroll preparation, attendance integration, statutory deductions, paysheet preparation and payroll reporting.',
     lead: 'Keep payroll processes organised with support for monthly payroll inputs, attendance coordination, salary reports and related documentation. The exact scope is agreed based on your organisation’s payroll process and requirements.',
     needs: [
       'Payroll is handled manually across spreadsheets and needs a repeatable monthly process.',
@@ -81,11 +85,12 @@ export const services: Service[] = [
     number: '02',
     title: 'PF, ESI & Labour Law Compliances',
     short: 'PF, ESI & Labour Law',
+    image: '/images/services/pf-esi-labour-law-compliance.jpg',
     metaTitle: 'PF, ESI & Labour Law Compliance Support | ANK HR Services',
     metaDescription:
       'Support with applicable provident fund, employee state insurance and labour law documentation, contribution data and record coordination.',
     summary:
-      'Support with applicable provident fund, employee state insurance and labour law compliance processes and documentation.',
+      'Support for Provident Fund, Employee State Insurance and applicable labour law compliance, registrations, returns and documentation.',
     lead: 'Get support coordinating applicable statutory records, contribution data, documentation and compliance-related processes. Requirements and deliverables depend on the establishment, workforce, current law and agreed scope.',
     needs: [
       'Employee and employer records need to be organised against applicable statutory requirements.',
@@ -124,18 +129,19 @@ export const services: Service[] = [
         a: 'Only where that is agreed in writing and the necessary authorisation is in place. The engagement scope records exactly what is and is not included.',
       },
     ],
-    related: ['payroll-management', 'factory-establishment-compliance'],
+    related: ['payroll-management', 'pf-esi-scrutiny-cases'],
   },
   {
     slug: 'hr-operations-consultancy',
     number: '03',
     title: 'HR Operations & Consultancy',
     short: 'HR Operations',
+    image: '/images/services/hr-operations-consultancy.jpg',
     metaTitle: 'HR Operations & Consultancy | ANK HR Services',
     metaDescription:
       'Practical support for HR administration, employee records, attendance and leave processes, HR reporting and employee lifecycle coordination.',
     summary:
-      'Practical support for HR administration, employee lifecycle processes, coordination and operational improvements.',
+      'Employee lifecycle management, HR administration, attendance, leave management, employee relations and HR process improvement.',
     lead: 'Build more organised HR processes with support for employee records, attendance and leave coordination, HR administration, reporting and employee lifecycle workflows.',
     needs: [
       'HR administration is handled alongside other roles and needs a clearer structure.',
@@ -177,11 +183,12 @@ export const services: Service[] = [
     number: '04',
     title: 'HR Policies & Documentation',
     short: 'Policies & Documentation',
+    image: '/images/services/hr-policies-documentation.jpg',
     metaTitle: 'HR Policies & Documentation Support | ANK HR Services',
     metaDescription:
       'Support drafting and organising HR policies, employee handbooks, standard letters, forms, checklists, SOPs and employee records.',
     summary:
-      'Assistance with preparing and organising HR policies, employee documents, letters, formats and process records.',
+      'Development and implementation of HR policies, employee handbooks, appointment letters, HR formats and employment documentation.',
     lead: 'Help your organisation work from clear, consistent HR documents — policies, letters, formats, checklists and process records that your team can actually use day to day.',
     needs: [
       'Policies exist informally and are not written down or applied consistently.',
@@ -222,11 +229,12 @@ export const services: Service[] = [
     number: '05',
     title: 'Recruitment & Staffing',
     short: 'Recruitment',
+    image: '/images/services/recruitment-staffing.jpg',
     metaTitle: 'Recruitment & Staffing Support | ANK HR Services',
     metaDescription:
       'Recruitment coordination support covering role definition, candidate screening coordination, interview scheduling and joining formalities.',
     summary:
-      'Support with recruitment coordination, candidate screening processes, interview scheduling and staffing requirements.',
+      'Manpower planning, candidate sourcing, screening, interview coordination, recruitment and staffing support.',
     lead: 'Coordinate hiring requirements through role definition, candidate process coordination, interview scheduling and joining support, so open roles move forward in a structured way.',
     needs: [
       'Roles are open but the hiring process stalls between steps.',
@@ -267,11 +275,12 @@ export const services: Service[] = [
     number: '06',
     title: 'Factory & Establishment Compliance',
     short: 'Factory & Establishment',
+    image: '/images/services/factory-establishment-compliance.jpg',
     metaTitle: 'Factory & Establishment Compliance Support | ANK HR Services',
     metaDescription:
       'Support organising registers, licences, renewal documentation and inspection records for factories and commercial establishments.',
     summary:
-      'Support with compliance documentation and process coordination relevant to factories and commercial establishments.',
+      'Support for applicable factory and establishment registrations, renewals, statutory records, licences and compliance documentation.',
     lead: 'Support with organising records and coordinating applicable compliance requirements for factories and commercial establishments, so documentation is ready when it is needed.',
     needs: [
       'Registers and statutory records need to be maintained in a consistent format.',
@@ -305,18 +314,19 @@ export const services: Service[] = [
         a: 'Multi-location coordination can be discussed. Scope, effort and the records involved are agreed per location.',
       },
     ],
-    related: ['pf-esi-labour-law-compliance', 'contract-labour-management'],
+    related: ['pf-esi-scrutiny-cases', 'contract-labour-management'],
   },
   {
     slug: 'contract-labour-management',
     number: '07',
     title: 'Contract Labour Management',
     short: 'Contract Labour',
+    image: '/images/services/contract-labour-management.jpg',
     metaTitle: 'Contract Labour Management Support | ANK HR Services',
     metaDescription:
       'Support for contractor documentation, contract workforce records, attendance and wage data coordination and audit document preparation.',
     summary:
-      'Support with contractor documentation, workforce records and applicable contract labour compliance coordination.',
+      'Contract workforce coordination, contractor documentation, labour compliance monitoring and workforce administration.',
     lead: 'Support for organised contract workforce records and compliance-related coordination between principal employer and contractor, based on the responsibilities agreed between the parties.',
     needs: [
       'Contractor documentation arrives in different formats and is hard to verify.',
@@ -351,6 +361,58 @@ export const services: Service[] = [
       },
     ],
     related: ['factory-establishment-compliance', 'pf-esi-labour-law-compliance'],
+  },
+  {
+    slug: 'pf-esi-scrutiny-cases',
+    number: '08',
+    title: 'PF, ESI & Labour Law Scrutiny Cases',
+    short: 'Scrutiny Cases',
+    image: '/images/services/pf-esi-scrutiny-cases.jpg',
+    metaTitle: 'PF, ESI & Labour Law Scrutiny Case Support | ANK HR Services',
+    metaDescription:
+      'Assistance with statutory inspections, scrutiny proceedings, documentation verification, notice responses and coordination with the relevant authorities.',
+    summary:
+      'Assistance with statutory inspections, scrutiny proceedings, documentation verification, notice responses and coordination with relevant authorities.',
+    lead: 'When an inspection, scrutiny or notice arrives, the work is largely about producing the right records quickly and in order. We help assemble, verify and present the documentation, and coordinate the response alongside your authorised professionals.',
+    needs: [
+      'A notice, summons or scrutiny intimation has been received and needs a structured response.',
+      'Records requested by an authority are spread across departments, contractors or periods.',
+      'Contribution and wage data needs reconciling against the records already filed.',
+      'An inspection is expected and the documentation should be ready in advance.',
+    ],
+    activities: [
+      'Review of the notice or scrutiny requirement and the records it calls for',
+      'Assembly and verification of the supporting documentation',
+      'Reconciliation of contribution, wage and employee data against filed records',
+      'Preparation of document sets, annexures and chronologies for submission',
+      'Drafting support for responses and covering submissions, for client approval',
+      'Coordination with the client’s authorised consultants, advocates and representatives',
+      'Tracking of hearing dates, submissions and follow-up requirements',
+    ],
+    engagement: [
+      'We review the notice, the period involved and the records currently available.',
+      'A document checklist is agreed and gaps are identified early.',
+      'Records are assembled, reconciled and organised into a submission-ready set.',
+      'Responses and submissions are prepared for your review and approval before filing.',
+      'Representation before any authority is handled by your authorised professionals.',
+    ],
+    scopeNote:
+      'This service is documentation, reconciliation and coordination support. It is not legal representation and is not a legal opinion. Appearance before any authority, and any submission made on the organisation’s behalf, remains with the client and its authorised professionals. No particular outcome is promised.',
+    faqs: [
+      {
+        q: 'Do you appear before the authorities on our behalf?',
+        a: 'No. We prepare and organise the documentation and coordinate the response. Appearance and representation are handled by your authorised consultant or advocate, with whom we work directly.',
+      },
+      {
+        q: 'We have received a notice with a short deadline. Can you help?',
+        a: 'Please get in touch as early as possible with the notice and the period it covers. What can be done depends on the records available and the time remaining, and we will tell you honestly what is realistic.',
+      },
+      {
+        q: 'Can you help prepare before an inspection rather than after a notice?',
+        a: 'Yes. Reviewing and organising records against an agreed checklist in advance is usually far less disruptive than assembling them under a deadline.',
+      },
+    ],
+    related: ['pf-esi-labour-law-compliance', 'factory-establishment-compliance'],
   },
 ];
 

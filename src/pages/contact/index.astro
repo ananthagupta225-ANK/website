@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import EnquiryForm from '../../components/EnquiryForm.astro';
+import Watermark from '../../components/Watermark.astro';
 import { site, telLink, mailLink, whatsappLink } from '../../data/site';
 import { href, abs } from '../../lib/url';
 
@@ -27,14 +28,15 @@ const schema = [
     breadcrumbs={[{ label: 'Contact' }]}
   />
 
-  <section class="section">
+  <section class="section has-watermark">
+    <Watermark position="top-right" size={470} opacity={0.04} tone="navy" />
     <div class="container">
       <div class="contact">
-        <div class="contact__form">
+        <div class="contact__form" data-reveal="up">
           <EnquiryForm />
         </div>
 
-        <aside class="contact__aside">
+        <aside class="contact__aside" data-reveal="right">
           <div class="contact-card">
             <h2>Speak to us directly</h2>
             <ul class="contact-list">

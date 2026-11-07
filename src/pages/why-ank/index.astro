@@ -2,41 +2,42 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import Watermark from '../../components/Watermark.astro';
 
 const title = 'Why Choose ANK | ANK HR Services';
 const description =
-  'Why businesses work with ANK HR Services: organised processes, careful documentation, clear communication and a service scope agreed in writing up front.';
+  'Why businesses work with ANK HR Services: comprehensive HR solutions, payroll expertise, compliance support, practical consulting and structured documentation.';
 
 const reasons = [
   {
     n: '01',
-    t: 'Organised processes',
-    d: 'We focus on clear workflows, documentation and coordination. Checklists, trackers and record formats are agreed up front so the same process runs the same way every cycle.',
+    t: 'Comprehensive HR Solutions',
+    d: 'Payroll, statutory compliance, HR operations, documentation, recruitment and workforce support — coordinated through a single point of contact rather than split across separate providers.',
   },
   {
     n: '02',
-    t: 'Business-focused support',
-    d: 'We aim to understand how your organisation actually works — the people, the approvals, the systems — before agreeing on the scope of support.',
+    t: 'Payroll Management Expertise',
+    d: 'Structured monthly cycles, accurate inputs and consistent reporting, built around your existing approvals and salary structures rather than forcing a new process on your team.',
   },
   {
     n: '03',
-    t: 'Attention to detail',
-    d: 'Employee records, payroll inputs and compliance documentation require careful handling. Accuracy in the detail is what makes the rest of the process dependable.',
+    t: 'Statutory Compliance Support',
+    d: 'PF, ESI, labour law, factory and establishment documentation organised against an agreed compliance calendar, so recurring dates and records do not get missed.',
   },
   {
     n: '04',
-    t: 'Clear communication',
-    d: 'We encourage timely coordination and clarity on responsibilities, information and approvals, so nothing sits waiting on an unasked question.',
+    t: 'Practical HR Consulting',
+    d: 'Recommendations you can actually act on. We review how HR runs today and suggest changes that fit your workforce, your systems and the people who have to operate them.',
   },
   {
     n: '05',
-    t: 'Flexible service scope',
-    d: 'Support can be discussed based on the organisation’s needs and agreed deliverables — one function or several, ongoing or for a defined period.',
+    t: 'Structured Documentation',
+    d: 'Employee records, registers, trackers and formats kept in order, so the right document can be produced quickly when an auditor, authority or manager asks for it.',
   },
   {
     n: '06',
-    t: 'A single point of coordination',
-    d: 'Rather than managing separate providers for payroll, documentation and compliance coordination, you can discuss several requirements with one service partner.',
+    t: 'Reliable Client Coordination',
+    d: 'Clear ownership of responsibilities, approvals and timelines on both sides, with communication you do not have to chase.',
   },
 ];
 ---
@@ -49,12 +50,13 @@ const reasons = [
     breadcrumbs={[{ label: 'Why ANK' }]}
   />
 
-  <section class="section">
+  <section class="section has-watermark">
+    <Watermark position="top-right" size={470} opacity={0.04} tone="navy" />
     <div class="container">
-      <ul class="reasons">
+      <ul class="reasons" data-stagger>
         {
           reasons.map((r) => (
-            <li class="reason">
+            <li class="reason" data-reveal="up">
               <span class="reason__num">{r.n}</span>
               <h2 class="reason__title">{r.t}</h2>
               <p class="reason__text">{r.d}</p>
@@ -65,7 +67,8 @@ const reasons = [
     </div>
   </section>
 
-  <section class="section section--grey">
+  <section class="section section--grey has-watermark">
+    <Watermark position="bottom-left" size={430} opacity={0.04} tone="navy" />
     <div class="container container--narrow">
       <p class="label">Being clear about what we offer</p>
       <h2>What we do not claim</h2>

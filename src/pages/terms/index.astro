@@ -1,0 +1,203 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site, telLink, mailLink } from '../../data/site';
+import { href } from '../../lib/url';
+
+const title = 'Terms & Conditions | ANK HR Services';
+const description =
+  'The terms on which ANK HR Services provides this website and the basis on which services are engaged.';
+
+/* ---------------------------------------------------------------------------
+   DRAFT STATUS
+   Set `approved` to true once ANK has reviewed and approved these terms.
+   That removes the amber review banner below.
+   --------------------------------------------------------------------------- */
+const approved = false;
+const lastUpdated = '7 November 2026';
+---
+
+<Base title={title} description={description}>
+  <PageHero label="Legal" title="Terms & Conditions" breadcrumbs={[{ label: 'Terms & Conditions' }]} />
+
+  <section class="section">
+    <div class="container container--narrow">
+      {
+        !approved && (
+          <div class="draft" role="note">
+            <p class="draft__tag">For ANK review — not yet approved</p>
+            <p>
+              This is a draft covering the points a services website normally
+              needs. It is <strong>not legal advice</strong> and must be
+              reviewed and approved by ANK HR Services — and, where
+              appropriate, by a qualified adviser — before the site is
+              published. Once approved, set <code>approved = true</code> in{' '}
+              <code>src/pages/terms/index.astro</code> to remove this banner.
+            </p>
+          </div>
+        )
+      }
+
+      <p class="updated">Last updated: {lastUpdated}</p>
+
+      <div class="prose">
+        <p class="lead">
+          These terms apply to your use of this website. They do not replace
+          the written engagement terms agreed for any service ANK HR Services
+          provides.
+        </p>
+
+        <h2>About this website</h2>
+        <p>
+          This website is operated by {site.legalName}, {site.addressLine}. It
+          describes the services we can discuss and provides ways to contact
+          us. Using the site means you accept these terms.
+        </p>
+
+        <h2>Information is general</h2>
+        <p>
+          Everything on this site is general information about our services. It
+          is not legal, tax, accounting or professional advice, and it is not a
+          determination about any organisation’s obligations. Statutory
+          requirements vary by establishment, location, workforce and the law
+          in force at the time, and they change. Do not act on anything here
+          without advice specific to your circumstances.
+        </p>
+
+        <h2>No engagement is created by this website</h2>
+        <p>
+          Submitting the enquiry form, calling, emailing or messaging us does
+          not create a service engagement. A service relationship begins only
+          when scope, responsibilities, deliverables, timelines and commercials
+          have been agreed in writing between both parties.
+        </p>
+
+        <h2>Scope of services</h2>
+        <p>
+          The services described on this site are support, coordination and
+          documentation services. Unless expressly agreed in writing in an
+          engagement:
+        </p>
+        <ul>
+          <li>we do not provide legal representation or legal opinions;</li>
+          <li>
+            we do not assume any statutory responsibility that rests with the
+            client as employer, principal employer or occupier;
+          </li>
+          <li>
+            we do not guarantee any particular compliance position, assessment,
+            hiring or proceeding outcome;
+          </li>
+          <li>
+            deliverables remain subject to the client’s review and approval
+            before they are issued or acted on.
+          </li>
+        </ul>
+
+        <h2>Accuracy and availability</h2>
+        <p>
+          We aim to keep this site accurate and available, but we do not
+          warrant that it is error-free, complete, current or uninterrupted. We
+          may change or remove content at any time without notice.
+        </p>
+
+        <h2>Your information</h2>
+        <p>
+          Information you send through this site is handled as described in our{' '}
+          <a href={href('/privacy-policy/')}>Privacy Policy</a>. Please do not
+          send employee personal data, payroll files or other sensitive records
+          through the enquiry form; we will agree a secure method with you if
+          files need to be shared.
+        </p>
+
+        <h2>Intellectual property</h2>
+        <p>
+          The ANK HR Services name, logo and the content of this site belong to
+          ANK HR Services or its licensors. You may view and print pages for
+          your own business use. Copying, republishing or using the content
+          commercially without written permission is not permitted.
+        </p>
+
+        <h2>Third-party links</h2>
+        <p>
+          Where we link to other websites or services, they operate under their
+          own terms and policies. We are not responsible for their content or
+          practices.
+        </p>
+
+        <h2>Liability</h2>
+        <p>
+          To the extent permitted by law, ANK HR Services is not liable for any
+          loss arising from reliance on information published on this website.
+          Liability in respect of services provided under an engagement is
+          governed by the terms of that engagement.
+        </p>
+
+        <h2>Governing law</h2>
+        <p>
+          These terms are governed by the laws of India, and the courts at
+          Hyderabad, Telangana have jurisdiction in respect of any dispute
+          relating to this website.
+          {' '}
+          <em>(ANK to confirm jurisdiction before publication.)</em>
+        </p>
+
+        <h2>Changes to these terms</h2>
+        <p>
+          We may update these terms from time to time. The date at the top of
+          this page shows when they were last revised.
+        </p>
+
+        <h2>Contact</h2>
+        <ul>
+          <li>Phone: <a href={telLink}>{site.phoneDisplay}</a></li>
+          {!site.emailIsPlaceholder && <li>Email: <a href={mailLink}>{site.email}</a></li>}
+          <li>Address: {site.addressLine}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .draft {
+    padding: 1.25rem 1.5rem;
+    background: #fff4ec;
+    border: 1px solid #ffd3b8;
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+    font-size: 0.9375rem;
+    color: #8a3a06;
+  }
+
+  .draft__tag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .draft code {
+    font-size: 0.8125rem;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+  }
+
+  .updated {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .prose h2 {
+    font-size: 1.1875rem;
+  }
+
+  .prose ul {
+    color: var(--ink-2);
+  }
+</style>
