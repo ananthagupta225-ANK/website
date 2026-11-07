@@ -1,11 +1,12 @@
-# Assets still needed from ANK
+# Assets
 
-The redesign is built and working. Everything below is a slot that is already
-wired up — drop the file at the exact path shown and it appears on the next
-build. **No code change is needed.**
+The redesign is built and every image slot is filled. This file records what
+is in place, where it came from, and what is still worth improving.
 
-Until a file arrives, that slot shows a branded navy panel instead. Nothing
-looks broken, and nothing has been invented, approximated or substituted.
+Every slot is checked at build time: a file that exists is used, one that does
+not falls back to a branded navy panel. So any image here can be replaced by
+dropping a new file at the same path and rebuilding — **no code change
+needed** — and a missing file never renders as broken.
 
 ---
 
@@ -50,73 +51,34 @@ so and it can be added.
 
 ---
 
-## 2. Photographs
+## 2. Photographs — ✅ DONE (but worth replacing later)
 
-The brief asks for licensed stock or original photography. **Licensing is the
-owner's call, so nothing has been downloaded or embedded.** The slots are ready.
+All 16 slots are filled with **CC0 1.0** photographs from StockSnap, found via
+the Openverse API. CC0 means free commercial use with **no attribution
+required** — nothing needs crediting on the site.
 
-Guidance from brief section 12: professional corporate photographs, no
-cartoon-style illustrations, consistent style, landscape for major sections,
-and **do not reuse the same photograph across service cards**.
+Full provenance for every file is in **[IMAGE-CREDITS.md](IMAGE-CREDITS.md)**,
+including one caveat worth reading: CC0 covers copyright, not the personality
+rights of the people pictured. Standard stock-photo practice, low risk — but
+never present anyone in them as ANK staff or a client.
 
-### Main sections
+Each image ships as a `.jpg` plus a `.webp`, and browsers get the WebP first.
 
-| Save as | What it shows | Suggested size |
-|---|---|---|
-| `public/images/hero-hr-consulting.jpg` | Homepage hero — HR consultants with a client | 1200×1020 |
-| `public/images/about-ank.jpg` | About — consultant or business meeting | 1200×1380 |
+| Section | Files |
+|---|---|
+| Hero and About | `hero-hr-consulting`, `about-ank` |
+| Services | 8 files in `public/images/services/`, one per service |
+| Industries | 6 files in `public/images/industries/` |
 
-### The eight services
+No photograph is reused anywhere, per brief section 12.
 
-Each service card and service page has its own slot:
+### Worth doing when you can
 
-| Save as | Service | Suggested size |
-|---|---|---|
-| `public/images/services/payroll-management.jpg` | Payroll Management | 1200×800 |
-| `public/images/services/pf-esi-labour-law-compliance.jpg` | PF, ESI & Labour Law Compliances | 1200×800 |
-| `public/images/services/hr-operations-consultancy.jpg` | HR Operations & Consultancy | 1200×800 |
-| `public/images/services/hr-policies-documentation.jpg` | HR Policies & Documentation | 1200×800 |
-| `public/images/services/recruitment-staffing.jpg` | Recruitment & Staffing | 1200×800 |
-| `public/images/services/factory-establishment-compliance.jpg` | Factory & Establishment Compliance | 1200×800 |
-| `public/images/services/contract-labour-management.jpg` | Contract Labour Management | 1200×800 |
-| `public/images/services/pf-esi-scrutiny-cases.jpg` | PF, ESI & Labour Law Scrutiny Cases | 1200×800 |
-
-### The six industries
-
-| Save as | Industry | Suggested size |
-|---|---|---|
-| `public/images/industries/corporate-offices.jpg` | Corporate Offices | 1200×800 |
-| `public/images/industries/manufacturing-factories.jpg` | Manufacturing & Factories | 1200×800 |
-| `public/images/industries/retail-hospitality.jpg` | Retail & Hospitality | 1200×800 |
-| `public/images/industries/healthcare-institutions.jpg` | Healthcare & Institutions | 1200×800 |
-| `public/images/industries/it-ites.jpg` | IT & ITES | 1200×800 |
-| `public/images/industries/service-organisations.jpg` | Service Organisations | 1200×800 |
-
-### WebP
-
-The brief asks for optimised WebP images. This is automatic: if a `.webp`
-sibling sits next to the `.jpg`, it is served first and the `.jpg` stays as the
-fallback. So `payroll-management.jpg` **and** `payroll-management.webp` in the
-same folder means modern browsers get the WebP.
-
-To generate them from the JPGs you have:
-
-```bash
-# one file
-npx sharp-cli -i public/images/hero-hr-consulting.jpg -o public/images/hero-hr-consulting.webp
-
-# or convert everything in place
-for f in public/images/**/*.jpg; do
-  npx sharp-cli -i "$f" -o "${f%.jpg}.webp"
-done
-```
-
-### Alt text
-
-Every slot already has descriptive alt text written for it. If a photograph
-shows something different from what the alt text describes, update it in the
-page or in `src/data/services.ts` — the alt text should describe the actual
-image.
+Photographs of your own team, office and client sites would be better than
+stock on every count — more credible, more distinctive, and it removes the
+personality-rights question entirely. Swapping any file is a drop-in: same
+path, same rough aspect ratio, rebuild. Sizes and the WebP command are in
+[IMAGE-CREDITS.md](IMAGE-CREDITS.md).
 
 ---
 
