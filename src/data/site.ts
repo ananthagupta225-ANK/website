@@ -17,23 +17,27 @@ export const site = {
      The redesign brief requires the ORIGINAL approved ANK artwork, used
      unaltered. Nothing here is recreated, approximated or redrawn.
 
-     1. FULL LOGO — header and footer.
-        Save as  public/images/ank-logo.svg  (SVG preferred; a transparent
-        PNG also works — just change the extension below).
+     Both files below were produced from the supplied artwork
+     "HR Final (1).png" by removing the white background and cropping —
+     nothing was redrawn, recoloured or reproportioned.
 
-     2. CIRCULAR MARK — the oversized background watermark.
-        The circle must be EXTRACTED from the approved logo as its own
-        transparent file, not substituted with a generic circle.
-        Save as  public/images/ank-circle-mark.svg
+     1. FULL LOGO — header and footer. The complete lockup: circular mark,
+        ANK wordmark, "HR Services" and the "Growing Together Beyond
+        Limits" tagline, at its original 2.924:1 proportions.
 
-     Both appear automatically as soon as the files exist at these paths.
-     Until then the header shows a plain typographic wordmark and the
-     watermark simply does not render — nothing looks broken.
+     2. CIRCULAR MARK — the three-person circle on its own, padded square,
+        used for the background watermark and every app icon.
+
+     If a vector (SVG/AI/EPS) original exists it is worth swapping in: it
+     would stay crisp at any size and shrink the page weight. A reversed
+     (white) version of the logo would also help — the lockup's navy
+     elements have little contrast on the dark footer, which is currently
+     handled by placing it on a white panel.
      ------------------------------------------------------------------ */
-  logo: '/images/ank-logo.svg',
-  logoWidth: 176,
-  logoHeight: 46,
-  circleMark: '/images/ank-circle-mark.svg',
+  logo: '/images/ank-logo.png',
+  logoWidth: 180,
+  logoHeight: 62, // the supplied lockup is 2.924:1 — keep this ratio
+  circleMark: '/images/ank-circle-mark.png',
 
   /* Contact ------------------------------------------------------------ */
   phone: '+919700369225',

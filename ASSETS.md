@@ -9,34 +9,44 @@ looks broken, and nothing has been invented, approximated or substituted.
 
 ---
 
-## 1. Brand artwork — required
+## 1. Brand artwork — ✅ DONE
 
-The brief is explicit that the approved artwork must be used unaltered and
-must not be recreated from a reference image. Neither file has been supplied,
-so neither has been guessed at.
+Supplied as `HR Final  (1).png` (3750×3750) and now in place.
 
-| Save as | What it is | Format |
-|---|---|---|
-| `public/images/ank-logo.svg` | The full approved ANK HR Services logo | SVG preferred, or transparent PNG |
-| `public/images/ank-circle-mark.svg` | **Just the circular mark**, extracted from that same logo as its own transparent file | SVG preferred, or transparent PNG |
+Both files were produced from that original by **removing the white background
+and cropping only**. Nothing was redrawn, recoloured or reproportioned.
 
-**Right now:** the header and footer fall back to a plain typographic wordmark,
-and the watermark does not render at all.
+| File | What it is |
+|---|---|
+| `public/images/ank-logo.png` | The full lockup — circular mark, ANK wordmark, "HR Services" and the "Growing Together Beyond Limits" tagline — at its original 2.924:1 proportions, transparent background |
+| `public/images/ank-circle-mark.png` | The three-person circular mark alone, padded square, transparent |
 
-**Once added:** the logo appears in the header and footer at the brief's sizes
-(176px desktop, scaling down on smaller screens), and the circular watermark
-appears automatically in **eight** places — the hero, About, Services, Why ANK,
-Industries, Working Approach, Contact and the footer — at 3–5% opacity, behind
-all content, with `pointer-events: none`.
+The supplied artwork's colours match the official brand hexes almost exactly:
+sampling it returns `#07234F` (navy), `#FF5400` (orange) and `#00C025` (green).
 
-If the extension differs (`.png` instead of `.svg`), update the two paths in
-`src/data/site.ts`.
+**Now live:** the logo appears in the header (180px wide, inside the brief's
+160–190px range) and footer, and the circular mark renders as the watermark in
+**eight** places at 4–5% opacity behind content. Every app icon and the social
+share image were regenerated from the mark.
 
-### Also worth replacing
+### Two improvements worth making
 
-These currently use a plain "A" monogram, not the ANK symbol:
-`public/favicon.svg`, `public/apple-touch-icon.png`, `public/icon-192.png`,
-`public/icon-512.png`, and the social share image `public/images/og-default.png`.
+1. **A vector original (SVG / AI / EPS), if one exists.** The PNG is 3750px so
+   it is sharp everywhere, but it weighs 200 KB where a vector would be a few
+   KB and stay crisp at any size.
+
+2. **A reversed (white) version of the logo.** The lockup's navy elements have
+   almost no contrast on the dark navy footer. Because the brief forbids
+   recolouring the logo, the footer currently places the unaltered logo on a
+   small white panel — a standard, brand-safe treatment. A proper reversed
+   version would let it sit directly on the navy.
+
+### The tagline
+
+The logo carries **"Growing Together Beyond Limits"**, which was not in either
+earlier brief. It currently appears only as part of the logo artwork. If you
+want it as live text somewhere — under the hero heading, or in the footer — say
+so and it can be added.
 
 ---
 
