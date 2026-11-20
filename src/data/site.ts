@@ -57,9 +57,7 @@ export const site = {
   locality: 'Hyderabad',
   region: 'Telangana',
   country: 'IN',
-  hours: '09:00 AM – 06:00 PM',
-  hoursNote: 'Monday to Saturday', // ⚠ CONFIRM working days
-  hoursSchema: 'Mo-Sa 09:00-18:00',
+  hoursNote: 'Monday to Friday',
 
   /* Official social profiles — add only verified, active company pages.
      Any entry left out simply will not render. ------------------------- */
