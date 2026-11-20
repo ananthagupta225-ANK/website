@@ -60,10 +60,6 @@ const schema = [
           <a class="btn btn--accent" href={href('/services/')}>Explore Our Services</a>
           <a class="btn btn--on-navy" href={href('/contact/')}>Request a Consultation</a>
         </div>
-        <ul class="hero__meta" data-reveal="up" style="--reveal-delay:300ms">
-          <li>{site.locality}, {site.region}</li>
-          <li>Scope agreed per client</li>
-        </ul>
       </div>
 
       <div class="hero__media" data-reveal="scale" style="--reveal-delay:160ms">
@@ -365,34 +361,6 @@ const schema = [
     max-width: 46ch;
     color: #c7d4e6;
     font-size: clamp(1.0625rem, 1rem + 0.5vw, 1.3125rem);
-  }
-
-  .hero__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
-    list-style: none;
-    margin: 2.5rem 0 0;
-    padding: 1.35rem 0 0;
-    border-top: 1px solid var(--on-navy-line);
-    font-size: 0.8125rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #8aa1c2;
-  }
-
-  .hero__meta li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .hero__meta li::before {
-    content: '';
-    width: 0.3rem;
-    height: 0.3rem;
-    background: var(--green);
-    flex: none;
   }
 
   .hero__media {
