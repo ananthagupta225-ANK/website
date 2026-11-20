@@ -11,7 +11,7 @@ export const site = {
   legalName: 'ANK HR Services',
   tagline: 'Your One-Stop Partner for All HR Needs',
   description:
-    'ANK HR Services supports businesses in Telangana and Andhra Pradesh with HR operations, payroll management, employee documentation, recruitment coordination and applicable statutory compliance support.',
+    'ANK HR Services supports businesses with HR operations, payroll management, employee documentation, recruitment coordination and applicable statutory compliance support.',
 
   /* Brand assets -------------------------------------------------------
      The redesign brief requires the ORIGINAL approved ANK artwork, used
@@ -57,7 +57,6 @@ export const site = {
   locality: 'Hyderabad',
   region: 'Telangana',
   country: 'IN',
-  serviceArea: 'Telangana & Andhra Pradesh',
   hours: '09:00 AM – 06:00 PM',
   hoursNote: 'Monday to Saturday', // ⚠ CONFIRM working days
   hoursSchema: 'Mo-Sa 09:00-18:00',

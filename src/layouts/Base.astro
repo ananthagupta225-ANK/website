@@ -37,7 +37,6 @@ const organisation = {
     addressRegion: site.region,
     addressCountry: site.country,
   },
-  areaServed: site.serviceArea.split('&').map((a) => a.trim()),
   openingHours: site.hoursSchema,
   ...(site.social.length ? { sameAs: site.social.map((s) => s.href) } : {}),
 };
